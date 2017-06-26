@@ -1,0 +1,91 @@
+﻿@model CommodityViewModel
+@{
+    ViewBag.Title = "Template";
+    Layout = "~/Areas/Admin/Views/_Shared/Layout.cshtml";
+}
+<div class="model_alert from_body layui-form">
+    <div class="from_left layui-input-inline">
+        <div class="layui-form-item">
+            <img id="PicUrl" src="@Model.Commodity.PicUrl" alt="商品图" style="height:140px;width:160px" />
+        </div>
+        <div class="layui-form-item">
+            <input type="file" name="file" class="layui-upload-file">
+        </div>
+    </div>
+    <div class="from_right layui-input-inline">
+        <div class="input_container">
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类</label>
+                <div class="layui-input-inline">
+                    <select id="CategoryId" class="layui-input ">
+                        @{
+                            foreach (var item in Model.CategoryList)
+                            {
+                                <option value="@item.Id" @(Model.Commodity.CategoryId==item.Id?"selected":"")>@item.CategoryName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品名称</label>
+                <div class="layui-input-inline">
+                    <input id="Id" type="hidden" value="@Model.Commodity.Id"/>
+                    <input type="text" id="Name" name="title" lay-verify="title" autocomplete="off" placeholder="商品名" class="layui-input " value="@Model.Commodity.Name">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">售价</label>
+                <div class="layui-input-inline">
+                    <input id="Price" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="售价" class="layui-input" value="@Model.Commodity.Price">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">库存</label>
+                <div class="layui-input-inline">
+                    <input id="Stock" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="库存" class="layui-input" value="@Model.Commodity.Stock">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-block">
+                    <input id="Status" type="checkbox" @(Model.Commodity.Status==0?"": "checked") name="open" lay-skin="switch" lay-filter="Status">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section javascript{
+    <script>
+        layui.config({
+            base: '/Areas/Admin/js/admin/layui-ex/' //这是.js所在的目录
+        }).extend({ //设定模块别名
+            laydata: 'laydata', //laydata
+            covTime: 'covTime',//相对于上述base目录的子目录
+            tipsErr: "tipsErr"
+        });
+        layui.use(['laydata', 'form', 'laydate', 'covTime', 'layer', 'jquery', 'upload', 'tipsErr'], function () {
+            var $ = layui.jquery;
+            var laydata = layui.laydata;//表格+分页
+            var laydate = layui.laydate;//日期控件
+            var covTime = layui.covTime;//格式化时间
+            var tipsErr = layui.tipsErr;
+            var form = layui.form();
+            layui.upload({
+                url: '/common/FileUpload/UploadImg',
+                ext: 'jpg|png|gif',
+                before: function (input) {
+                    console.log(input);
+                },
+                success: function (res) {
+                    if (res.State == 0) {
+                        layer.msg(res.Msg, { time: 2000, icon: 1 })
+                        $("#PicUrl").attr("src", res.Url);
+                    } else {
+                        layer.msg(res.Msg, { time: 2000, icon: 2 })
+                    }
+                }
+            });
+        });
+    </script>
+}

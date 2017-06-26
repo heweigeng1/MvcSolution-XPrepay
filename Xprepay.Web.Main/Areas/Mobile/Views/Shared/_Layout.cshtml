@@ -1,0 +1,210 @@
+﻿@model LayoutViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Xprepay</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="/Areas/Mobile/light7/css/light7.min.css" rel="stylesheet" />
+    <link href="/Areas/Mobile/css/font_zoeqsuhbh6jyk3xr/iconfont.css" rel="stylesheet" />
+    <style type="text/css">
+        .cart-count {
+            line-height: 1.4rem;
+            margin-right: 15px;
+        }
+    </style>
+    @RenderSection("css", false)
+</head>
+<body>
+    <div class="page-group">
+        <div class="page page-current">
+            <header class="bar bar-nav">
+                <button class="button button-link button-nav pull-left open-popover">
+                    <span>&nbsp;</span>
+                    <span class="icon icon-app"></span>
+                </button>
+                <button class="button button-link button-nav pull-right">
+                    <span class="icon iconfont icon-store"></span>
+                    <span>&nbsp;</span>
+                </button>
+                <h1 class="title distributor-name" data-val="-1">未选择店铺</h1>
+            </header>
+            <nav class="bar bar-tab">
+                <a class="tab-item" href="#">
+                    <span class="icon iconfont icon-set bar-tab-me"></span>
+                    <span class="tab-label">我的</span>
+                </a>
+                <a class="tab-item" href="#">
+                    <span class="icon iconfont icon-survey"></span>
+                    <span class="tab-label">报损</span>
+                </a>
+                <a id="btn-cart" class="tab-item" href="#">
+                    <span class="icon iconfont icon-cart"></span>
+                    <span class="tab-label">补货</span>
+                </a>
+            </nav>
+            @RenderBody()
+        </div>
+        @*购物车*@
+        <div class="popup popup-orderlist">
+            <header class="bar bar-nav">
+                <h1 id="cart-title" class="title">订购列表</h1>
+            </header>
+            <div class="content">
+                <div class="list-block">
+                    <ul class="popup-content cart-body"></ul>
+                </div>
+            </div>
+            <nav class="bar bar-tab">
+                <div class="row">
+                    <div class="col-50"><a href="#" class="tom-btn button-success btn-cart-ok">确定 </a></div>
+                    <div class="col-50"><a href="#" class="tom-btn button-danger btn-cart-close close-popup">取消 </a></div>
+                </div>
+            </nav>
+        </div>
+        <!--侧栏 -->
+        <div class="panel-overlay"></div>
+        <div class="panel panel-left panel-reveal theme-dark" id='panel-left'>
+            <div class="content-block">
+                <p>左边侧栏</p>
+                <p>用户设置页面</p>
+                <p><a href="#" class="close-panel">关闭</a></p>
+                <p><a href="#" class="Logout">退出登录</a></p>
+            </div>
+            <div class="list-block">
+            </div>
+        </div>
+        @RenderSection("Popup",false)
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="/Areas/Mobile/light7/js/light7.min.js"></script>
+    <script>
+        //cookie
+        function saveCookieCart(data) {
+            var oldcart = [];
+            var newcart = [];
+            var cookie = $.cookie("cart");
+            if (!cookie || cookie == "[]") {
+                if (data.Count > 0) {
+                    newcart.push(data);
+                    var _cart = JSON.stringify(newcart)//转成字符串,保存在cookie
+                    $.cookie("cart", _cart);
+                }
+            } else {
+                oldcart = JSON.parse(cookie);
+                $.each(oldcart, function (key, val) {
+                    if (data.CommodityId != val.CommodityId) {
+                        newcart.push(val);
+                    }
+                });
+                if (data.Count > 0) {//个数小于0 则不添加
+                    newcart.push(data);
+                }
+                var _cart = JSON.stringify(newcart)//转成字符串,保存在cookie
+                $.cookie("cart", _cart);
+            }
+        }
+       
+        function RefreshByCart() {
+            var cookie = $.cookie("cart");
+            if ($(".card .badge").length > 0) {
+                $(".card .badge").each(function (index, val) {
+                    var $temp = $(val);
+                    $temp.text(0);
+                    $temp.hide();
+                    var id = $temp.attr("id");
+                    if (cookie || cookie != "[]") {
+                        Cart = JSON.parse(cookie);
+                        $.each(Cart, function (key, val) {
+                            if (val.CommodityId == id) {
+                                $("#" + id).text(val.Count);
+                                $("#" + id).show();
+                            };
+                        });
+                    };
+                });
+            }
+        };
+        //展示购物车
+        $("#btn-cart").click(function () {
+            var cookie = $.cookie("cart");
+            Cart = [];
+            var did = $(".distributor-name").data("val");
+            var dname = $(".distributor-name").text();
+            $(".popup-content").html("");
+            var html = "";
+            if (did == -1) {
+                $.toast("未选择门店");
+                return;
+            }
+            if (!cookie || cookie == '[]') {
+                $.toast("购物车未添加商品");
+                return;
+            }
+
+            Cart = JSON.parse(cookie);
+            $("#cart-title").text(dname);
+            $.each(Cart, function (key, val) {
+                html = html + "<li class='item-content'><div class='item-inner'><div class='item-title'>" + val.CDName + "</div><div class='item-after'><span class='cart-count'>" + val.Count + "</span><span class='btn-cart-box del' ><a href='#' class='button button-round' data-cid='" + val.CommodityId + "' data-name='大苹果'>-</a></span ><span class='btn-cart-box add'><a href='#' class='button button-round' data-cid='" + val.CommodityId + "' data-name='大苹果'>+</a></span></div></div ></li >"
+            });
+            $(".popup-content").html(html);
+            $.popup('.popup-orderlist');
+        });
+        //购物车取消按钮
+        $(".btn-cart-close").click(function () {
+            RefreshByCart();//根据cookie刷新页面的商品数量
+        });
+        //购物车 +-按钮
+        $(document).on("click", ".cart-body .btn-cart-box a", function () {
+            var id = $(this).data("cid");
+            var name = $(this).data("name");
+            var i = parseInt($(this).parent().prevAll(".cart-count").text());
+            if ($(this).text() == "+") {
+                i = i + 1;
+            } else {
+                i = i - 1 <= 0 ? 0 : i - 1;
+            }
+            $(this).parent().prevAll(".cart-count").text(i);
+            saveCookieCart({ CDName: name, Count: i, CommodityId: id });//更新cookie数据
+        })
+        $(".btn-cart-ok").click(function () {
+            $.showPreloader();
+            var did = $(".distributor-name").data("val");
+            $.post("@Url.Action("PlaceAnOrder", "MobileOrder",new { area="Mobile"})", { DistributorId: did, Olist: Cart }, function (data) {
+                    if (data.Valid) {
+                        setTimeout(function () {
+                            $.hidePreloader();
+                            $.toast("成功下单!");
+                            $.cookie("cart",null);//把购物车cookie清空
+                            RefreshByCart();
+                        }, 2000);
+                    } else {
+                        setTimeout(function () {
+                            //$.hidePreloader();
+                            if (data.Errors.length>0) {
+                                $.toast(data.Errors[0].Message);
+                            } else {
+                                $.toast("下单失败!!!");
+                            }
+                        }, 2000);
+                    }
+                });
+        });
+        //左边个人中心按钮
+        $(".bar-tab-me").click(function () {
+                console.log(this);
+                $.openPanel("#panel-left");
+            })
+            //退出登录
+            $(".Logout").click(function () {
+                location.href = "@Url.Action("Logout", "Home", new { area = "Mobile" })";
+            })
+    </script>
+    @RenderSection("javascript", false)
+</body>
+</html>

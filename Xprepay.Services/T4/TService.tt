@@ -1,0 +1,207 @@
+﻿
+
+<#@ template language="C#" hostspecific="true"#>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+﻿<#@ include file="TemplateData.include" #>
+
+<# var manager = Manager.Create(Host, GenerationEnvironment); #>
+<# string IserName="I"+enetiyName+"Service.cs";#>
+<# manager.StartNewFile(IserName); #>
+using System;
+using Xprepay.Data.Entities;
+using <#=IServiceNameSpace#>.Dtos;
+using <#=IServiceNameSpace#>.SearchCriterias;
+
+namespace <#=IServiceNameSpace#>
+{
+	public interface I<#=enetiyName#>Service
+    {
+        PageResult<<#=enetiyName#>Dto> Search(<#=enetiyName#>SearchCriteria asc, PageRequest request);
+        bool Add(<#=enetiyName#> entity);
+        bool Update(<#=enetiyName#> entity);
+        <#=enetiyName#>Dto Get(Guid id);
+        bool Delflag(Guid id);
+        bool Status(Guid id);
+    }
+}
+
+<# manager.EndBlock(); #>
+
+<# string serName=enetiyName+"Service.cs";#>
+<# manager.StartNewFile(serName); #>
+using System;
+using System.Linq;
+using Xprepay.Data.Entities;
+using Xprepay.Data.Enums;
+using <#=IServiceNameSpace#>.Dtos;
+using <#=IServiceNameSpace#>.SearchCriterias;
+
+namespace <#=IServiceNameSpace#>.Implementations
+{
+    public class <#=enetiyName#>Service :ServiceBase, I<#=enetiyName#>Service
+    {
+        public bool Add(<#=enetiyName#> entity)
+        {
+            using (var db=base.NewDB())
+            {
+                db.<#=enetiyName#>s.Add(entity);
+                return db.SaveChanges() > 0;
+            }
+        }
+
+        public bool Delflag(Guid id)
+        {
+            using (var db=base.NewDB())
+            {
+                var entity = db.<#=enetiyName#>s.Find(id);
+                if (entity!=null)
+                {
+                    entity.LastUpdatedTime = DateTime.Now;
+                    if (entity.Delflag==(int)EnumDelflag.正常)
+                    {
+                        entity.Delflag = (int)EnumDelflag.删除;
+                    }
+                    else
+                    {
+                        entity.Delflag = (int)EnumDelflag.正常;
+                    }
+                }
+                return db.SaveChanges() > 0;
+            }
+        }
+
+        public bool Update(<#=enetiyName#> entity)
+        {
+            using (var db=base.NewDB())
+            {
+                var model = db.<#=enetiyName#>s.Find(entity.Id);
+                if (entity!=null)
+                {
+					
+                }
+                return db.SaveChanges() > 0;
+            }
+        }
+
+        public <#=enetiyName#>Dto Get(Guid id)
+        {
+            using (var db=base.NewDB())
+            {
+                return db.<#=enetiyName#>s.Find(id).ToDto();
+            }
+        }
+
+        public PageResult<<#=enetiyName#>Dto> Search(<#=enetiyName#>SearchCriteria csc, PageRequest request)
+        {
+            using (var db=base.NewDB())
+            {
+                var data = db.<#=enetiyName#>s.AsQueryable();
+                if (csc.StarTime!=null)
+                {
+                    data = data.Where(c => c.CreatedTime >= csc.StarTime);
+                }
+                if (csc.EndTime!=null)
+                {
+                    data = data.Where(c => c.CreatedTime <= csc.EndTime);
+                }
+                if (!string.IsNullOrEmpty(csc.Search))
+                {
+                    data = data.Where(c => c.Name.Contains(csc.Search));
+                }
+                return data.ToDtos().ToPageResult(request);
+            }
+        }
+        /// <summary>
+        /// 修改状态
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool Status(Guid id)
+        {
+            using (var db=base.NewDB())
+            {
+                var entity = db.<#=enetiyName#>s.Find(id);
+                if (entity!=null)
+                {
+                    entity.LastUpdatedTime = DateTime.Now;
+                    if (entity.Status==(int)Enum<#=enetiyName#>Status.上架)
+                    {
+                        entity.Status = (int)Enum<#=enetiyName#>Status.下架;
+                    }
+                    else
+                    {
+                        entity.Status = (int)Enum<#=enetiyName#>Status.上架;
+                    }
+                }
+                return db.SaveChanges() > 0;
+            }
+        }
+    }
+}
+
+<# manager.EndBlock(); #>
+<# string SearchName=enetiyName+"SearchCriteria.cs";#>
+<# manager.StartNewFile(SearchName); #>
+using System;
+
+namespace <#=IServiceNameSpace#>.SearchCriterias
+{
+    public class <#=enetiyName#>SearchCriteria
+    {
+        public DateTime? StarTime { get; set; }
+        public DateTime? EndTime { get; set; }
+        public string Search { get; set; }
+        /// <summary>
+        /// 上下架
+        /// </summary>
+        public int State { get; set; }
+    }
+}
+
+<# manager.EndBlock(); #>
+<# string DtoName=enetiyName+"Dto.cs";#>
+<# manager.StartNewFile(DtoName); #>
+using System.Linq;
+using AutoMapper;
+using Xprepay.Services.Dtos;
+using <#=IServiceNameSpace#>.Dtos;
+using Xprepay.Data.Entities;
+
+namespace <#=IServiceNameSpace#>.Dtos
+{
+    public class <#=enetiyName#>Dto: DtoBase
+    {
+
+    }
+}
+
+namespace Xprepay
+{
+    public static class <#=enetiyName#>DtoExtAdmin
+    {
+        public static IQueryable<<#=enetiyName#>Dto> ToDtos(this IQueryable<<#=enetiyName#>> query)
+        {
+            return from a in query
+                   select new <#=enetiyName#>Dto()
+                   {
+
+                   };
+        }
+        public static <#=enetiyName#>Dto ToDto(this <#=enetiyName#> entity)
+        {
+            if (entity!=null)
+            {
+                return Mapper.Map<<#=enetiyName#>Dto>(entity);
+            }
+            return new <#=enetiyName#>Dto();
+        }
+    }
+}
+
+<# manager.EndBlock(); #>
+<# manager.Process(true); #>

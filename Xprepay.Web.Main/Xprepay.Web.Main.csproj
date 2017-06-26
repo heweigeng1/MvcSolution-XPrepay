@@ -1,0 +1,464 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{43A163FE-1F62-4AC5-8332-4462EC8308E1}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Xprepay.Web.Main</RootNamespace>
+    <AssemblyName>Xprepay.Web.Main</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_libs\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_libs\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoMapperConfigure\Configuration.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\css\images\arrow-right-b.png" />
+    <Content Include="Areas\Admin\css\images\arrows-l.png" />
+    <Content Include="Areas\Admin\css\images\arrows-s.png" />
+    <Content Include="Areas\Admin\css\images\bg-grid.png" />
+    <Content Include="Areas\Admin\css\images\close-top-right.png" />
+    <Content Include="Areas\Admin\css\images\file-excel-128.png" />
+    <Content Include="Areas\Admin\css\images\file-word-128.png" />
+    <Content Include="Areas\Admin\css\images\iphone5s.png" />
+    <Content Include="Areas\Admin\css\images\loading_1.gif" />
+    <Content Include="Areas\Admin\css\images\marker.png" />
+    <Content Include="Areas\Admin\css\images\menu-more.png" />
+    <Content Include="Areas\Admin\css\images\modal-black.png" />
+    <Content Include="Areas\Admin\css\images\modal-black80.png" />
+    <Content Include="Areas\Admin\css\images\modal.png" />
+    <Content Include="Areas\Admin\css\images\progressing.gif" />
+    <Content Include="Areas\Admin\css\images\remove-42.png" />
+    <Content Include="Areas\Admin\css\images\remove16.png" />
+    <Content Include="Areas\Admin\css\images\sort-asc.png" />
+    <Content Include="Areas\Admin\css\images\sort-desc.png" />
+    <Content Include="Areas\Admin\css\images\sort-none.png" />
+    <Content Include="Areas\Admin\css\images\toast.png" />
+    <Content Include="Areas\Admin\css\images\zooms.png" />
+    <Content Include="Areas\Admin\css\pages\layout.css" />
+    <Content Include="Areas\Admin\js\admin\component.js" />
+    <Content Include="Areas\Admin\js\admin\layui-ex\covTime.js" />
+    <Content Include="Areas\Admin\js\admin\layui-ex\jfTable.js" />
+    <Content Include="Areas\Admin\js\admin\layui-ex\laydata.js" />
+    <Content Include="Areas\Admin\js\admin\layui-ex\tipsErr.js" />
+    <Content Include="Areas\Admin\js\admin\layui\css\layui.css" />
+    <Content Include="Areas\Admin\js\admin\layui\css\layui.mobile.css" />
+    <Content Include="Areas\Admin\js\admin\layui\css\modules\code.css" />
+    <Content Include="Areas\Admin\js\admin\layui\css\modules\laydate\icon.png" />
+    <Content Include="Areas\Admin\js\admin\layui\css\modules\laydate\laydate.css" />
+    <Content Include="Areas\Admin\js\admin\layui\css\modules\layer\default\icon-ext.png" />
+    <Content Include="Areas\Admin\js\admin\layui\css\modules\layer\default\icon.png" />
+    <Content Include="Areas\Admin\js\admin\layui\css\modules\layer\default\layer.css" />
+    <Content Include="Areas\Admin\js\admin\layui\css\modules\layer\default\loading-0.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\css\modules\layer\default\loading-1.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\css\modules\layer\default\loading-2.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\font\iconfont.svg" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\0.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\1.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\10.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\11.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\12.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\13.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\14.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\15.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\16.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\17.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\18.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\19.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\2.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\20.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\21.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\22.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\23.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\24.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\25.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\26.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\27.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\28.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\29.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\3.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\30.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\31.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\32.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\33.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\34.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\35.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\36.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\37.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\38.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\39.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\4.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\40.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\41.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\42.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\43.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\44.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\45.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\46.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\47.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\48.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\49.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\5.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\50.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\51.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\52.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\53.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\54.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\55.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\56.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\57.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\58.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\59.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\6.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\60.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\61.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\62.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\63.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\64.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\65.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\66.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\67.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\68.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\69.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\7.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\70.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\71.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\8.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\images\face\9.gif" />
+    <Content Include="Areas\Admin\js\admin\layui\layui.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\dest\layui.all.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\code.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\element.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\flow.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\form.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\jquery.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\laydate.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\layedit.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\layer.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\laypage.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\laytpl.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\mobile.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\tree.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\upload.js" />
+    <Content Include="Areas\Admin\js\admin\layui\lay\modules\util.js" />
+    <Content Include="Areas\Admin\js\admin\tools.js" />
+    <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\demo.css" />
+    <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\demo_fontclass.html" />
+    <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\demo_symbol.html" />
+    <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\demo_unicode.html" />
+    <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.css" />
+    <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.js" />
+    <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.svg" />
+    <Content Include="Areas\Mobile\css\images\arrow-right-b.png" />
+    <Content Include="Areas\Mobile\css\images\arrows-l.png" />
+    <Content Include="Areas\Mobile\css\images\arrows-s.png" />
+    <Content Include="Areas\Mobile\css\images\bg-grid.png" />
+    <Content Include="Areas\Mobile\css\images\close-top-right.png" />
+    <Content Include="Areas\Mobile\css\images\file-excel-128.png" />
+    <Content Include="Areas\Mobile\css\images\file-word-128.png" />
+    <Content Include="Areas\Mobile\css\images\iphone5s.png" />
+    <Content Include="Areas\Mobile\css\images\loading_1.gif" />
+    <Content Include="Areas\Mobile\css\images\marker.png" />
+    <Content Include="Areas\Mobile\css\images\menu-more.png" />
+    <Content Include="Areas\Mobile\css\images\modal-black.png" />
+    <Content Include="Areas\Mobile\css\images\modal-black80.png" />
+    <Content Include="Areas\Mobile\css\images\modal.png" />
+    <Content Include="Areas\Mobile\css\images\progressing.gif" />
+    <Content Include="Areas\Mobile\css\images\remove-42.png" />
+    <Content Include="Areas\Mobile\css\images\remove16.png" />
+    <Content Include="Areas\Mobile\css\images\sort-asc.png" />
+    <Content Include="Areas\Mobile\css\images\sort-desc.png" />
+    <Content Include="Areas\Mobile\css\images\sort-none.png" />
+    <Content Include="Areas\Mobile\css\images\toast.png" />
+    <Content Include="Areas\Mobile\css\images\zooms.png" />
+    <Content Include="Areas\Mobile\css\pages\layout.css" />
+    <Content Include="Areas\Mobile\js\jquery.min.js" />
+    <Content Include="Areas\Mobile\light7\css\light7-swipeout.css" />
+    <Content Include="Areas\Mobile\light7\css\light7-swiper.css" />
+    <Content Include="Areas\Mobile\light7\css\light7-swiper.min.css" />
+    <Content Include="Areas\Mobile\light7\css\light7.css" />
+    <Content Include="Areas\Mobile\light7\css\light7.min.css" />
+    <Content Include="Areas\Mobile\light7\img\i-f7.png" />
+    <Content Include="Areas\Mobile\light7\img\i-form-calendar.png" />
+    <Content Include="Areas\Mobile\light7\img\i-form-comment.png" />
+    <Content Include="Areas\Mobile\light7\img\i-form-email.png" />
+    <Content Include="Areas\Mobile\light7\img\i-form-gender.png" />
+    <Content Include="Areas\Mobile\light7\img\i-form-name.png" />
+    <Content Include="Areas\Mobile\light7\img\i-form-password.png" />
+    <Content Include="Areas\Mobile\light7\img\i-form-settings.png" />
+    <Content Include="Areas\Mobile\light7\img\i-form-tel.png" />
+    <Content Include="Areas\Mobile\light7\img\i-form-toggle.png" />
+    <Content Include="Areas\Mobile\light7\img\i-form-url.png" />
+    <Content Include="Areas\Mobile\light7\img\i-list-chevron-right.png" />
+    <Content Include="Areas\Mobile\light7\img\i-sortable-handler.png" />
+    <Content Include="Areas\Mobile\light7\js\i18n\cn.js" />
+    <Content Include="Areas\Mobile\light7\js\i18n\cn.min.js" />
+    <Content Include="Areas\Mobile\light7\js\light7-city-picker.js" />
+    <Content Include="Areas\Mobile\light7\js\light7-city-picker.min.js" />
+    <Content Include="Areas\Mobile\light7\js\light7-swipeout.js" />
+    <Content Include="Areas\Mobile\light7\js\light7-swiper.js" />
+    <Content Include="Areas\Mobile\light7\js\light7-swiper.min.js" />
+    <Content Include="Areas\Mobile\light7\js\light7.js" />
+    <Content Include="Areas\Mobile\light7\js\light7.min.js" />
+    <Content Include="Areas\Public\css\images\login\bg.jpg" />
+    <Content Include="Areas\Public\css\images\login\roller.gif" />
+    <Content Include="Global.asax" />
+    <Content Include="Areas\Public\img\bg.jpg" />
+    <Content Include="Areas\Public\img\load.gif" />
+    <Content Include="_storage\css\404.png" />
+    <Content Include="_storage\css\bootstrap.3.0.3.css" />
+    <Content Include="_storage\js\jquery\jquery-1.7.2.min.js" />
+    <Content Include="_storage\js\jquery\jquery-2.0.3.min.js" />
+    <Content Include="_storage\js\jquery\jquery-ui-1.8.20.custom.min.js" />
+    <Content Include="_storage\js\jquery\jquery-ui-1.8.20.min.js" />
+    <Content Include="_storage\js\jquery\jquery.validate.min.js" />
+    <Content Include="_storage\js\jquery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Areas\Public\Views\Home\Login.cshtml" />
+    <Content Include="Areas\Public\Views\_Shared\Menu.cshtml" />
+    <Content Include="Areas\Admin\js\admin\layui\font\iconfont.eot" />
+    <Content Include="Areas\Admin\js\admin\layui\font\iconfont.ttf" />
+    <Content Include="Areas\Admin\js\admin\layui\font\iconfont.woff" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Commodity\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Distributor\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Commodity\Template.cshtml" />
+    <Content Include="Areas\Mobile\Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Mobile\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Mobile\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Mobile\Views\MobileOrder\Index.cshtml" />
+    <Content Include="Areas\Public\Views\Home\MobileLogin.cshtml" />
+    <Content Include="Areas\Admin\Views\User\UserDistributor.cshtml" />
+    <Content Include="Areas\Admin\Views\Area\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.eot" />
+    <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.ttf" />
+    <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.woff" />
+    <None Include="packages.config" />
+    <Content Include="Areas\Public\Views\_Shared\Error.cshtml" />
+    <Content Include="Areas\Public\Views\_Shared\Message.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\_Shared\Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\_Shared\Menu.cshtml" />
+    <Content Include="Areas\Admin\Views\Web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xprepay.Infrastructure\Xprepay.Infrastructure.csproj">
+      <Project>{3593818e-2b60-41a8-b5ba-de479b6a5d51}</Project>
+      <Name>Xprepay.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay.Data\Xprepay.Data.csproj">
+      <Project>{cd0718d0-4a31-4034-8e86-1c538a2ff0ad}</Project>
+      <Name>Xprepay.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay.Services.Mobile\Xprepay.Services.Mobile.csproj">
+      <Project>{83C712B1-C0D6-4117-B2F4-14ED76E1621B}</Project>
+      <Name>Xprepay.Services.Mobile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay.Services\Xprepay.Services.csproj">
+      <Project>{81a7247f-f729-49b4-ab99-1b0ab09fb56e}</Project>
+      <Name>Xprepay.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay.Web.Mobile\Xprepay.Web.Mobile.csproj">
+      <Project>{ca8b8720-6e2e-4da9-997c-20e1217d5ddb}</Project>
+      <Name>Xprepay.Web.Mobile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay.WebApi\Xprepay.WebApi.csproj">
+      <Project>{0d4552b4-f441-4009-ac58-9a16301a9dbc}</Project>
+      <Name>Xprepay.WebApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay.Web\Xprepay.Web.csproj">
+      <Project>{c87136d6-10a1-4aea-82e6-e6a31b0362b6}</Project>
+      <Name>Xprepay.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay._Areas\Admin\Xprepay.Services.Admin\Xprepay.Services.Admin.csproj">
+      <Project>{b6cfe2d2-a837-4877-b130-f8e963edeba5}</Project>
+      <Name>Xprepay.Services.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay._Areas\Admin\Xprepay.Web.Admin\Xprepay.Web.Admin.csproj">
+      <Project>{1491985f-e6dd-4a02-acc6-5586b484747a}</Project>
+      <Name>Xprepay.Web.Admin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay._Areas\Public\Xprepay.Services.Public\Xprepay.Services.Public.csproj">
+      <Project>{e8317f20-dfc3-4990-94a7-a5f728fb04ee}</Project>
+      <Name>Xprepay.Services.Public</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay._Areas\Public\Xprepay.Web.Public\Xprepay.Web.Public.csproj">
+      <Project>{e3f19180-19f1-400e-b80e-0e495d83e714}</Project>
+      <Name>Xprepay.Web.Public</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\img\" />
+    <Folder Include="Areas\Admin\Views\Setting\" />
+    <Folder Include="Areas\Mobile\img\" />
+    <Folder Include="Areas\Public\js\" />
+    <Folder Include="src\" />
+    <Folder Include="_js-source\_libs\admin\" />
+    <Folder Include="_js-source\_libs\app\" />
+    <Folder Include="_js-source\_libs\pc\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Public\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Public\Views\_Shared\Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Public\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\leo-laptop.pubxml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>6832</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:15098</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,115 @@
+﻿<#@ template language="C#" hostspecific="true"#>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+
+﻿<#@ include file="TemplateData.include" #>
+
+<# var manager = Manager.Create(Host, GenerationEnvironment); #>
+<# string concrollerName=enetiyName+"Controller.cs";#>
+<# manager.StartNewFile(concrollerName); #>
+
+using FluentValidation;
+using FluentValidation.Results;
+using System;
+using System.Web.Mvc;
+using Xprepay.Data.Entities;
+using <#=IServiceNameSpace#>;
+using <#=IServiceNameSpace#>.SearchCriterias;
+using <#=WebNameSpace#>.ViewModels.Validation;
+using Xprepay.Web.ViewModels;
+
+namespace <#=WebNameSpace#>.Controllers
+{
+    public class <#=enetiyName#>Controller : <#=ControllerBase#>
+    {
+        public ActionResult Index()
+        {
+            return View(new LayoutViewModel());
+        }
+        public ActionResult List(<#=enetiyName#>SearchCriteria csc, PageRequest request)
+        {
+            var list = Ioc.Get<I<#=enetiyName#>Service>().Search(csc, request);
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Add(<#=enetiyName#> entity)
+        {
+            ValidationResult result = new <#=enetiyName#>Validation().Validate(entity,ruleSet:"Add");
+            MsgModel model;
+            if (result.IsValid)
+            {
+                model = new MsgModel(Ioc.Get<I<#=enetiyName#>Service>().Add(entity));
+            }
+            else
+            {
+                model = new MsgModel(result);
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Get(Guid id)
+        {
+            var data = Ioc.Get<I<#=enetiyName#>Service>().Get(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Update(<#=enetiyName#> entity)
+        {
+            ValidationResult result = new <#=enetiyName#>Validation().Validate(entity, ruleSet: "Add");
+            MsgModel model;
+            if (result.IsValid)
+            {
+                model = new MsgModel(Ioc.Get<I<#=enetiyName#>Service>().Update(entity));
+            }
+            else
+            {
+                model = new MsgModel(result);
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Delflag(Guid id)
+        {
+            MsgModel model = new MsgModel(Ioc.Get<I<#=enetiyName#>Service>().Delflag(id));
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 上下架
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Status(Guid id)
+        {
+            MsgModel model = new MsgModel(Ioc.Get<I<#=enetiyName#>Service>().Status(id));
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+    }
+}
+<# manager.EndBlock(); #>
+
+
+<# string Validation=enetiyName+"Validation.cs";#>
+<# manager.StartNewFile(Validation); #>
+using FluentValidation;
+using Xprepay.Data.Entities;
+
+namespace <#=WebNameSpace#>.ViewModels.Validation
+{
+    public class <#=enetiyName#>Validation : AbstractValidator<<#=enetiyName#>>
+    {
+        public <#=enetiyName#>Validation()
+        {
+            //添加
+            RuleSet("Add", () =>
+            {
+                RuleFor(<#=enetiyName#> => <#=enetiyName#>.Name).NotNull().WithMessage("商品名称不能为空!").Length(1,20).WithMessage("商品名称长度大于20.");
+            });
+        }
+    }
+}
+
+<# manager.EndBlock(); #>
+
+<# manager.Process(true); #>

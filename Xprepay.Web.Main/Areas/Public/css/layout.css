@@ -1,0 +1,12 @@
+﻿.model_alert{
+    font-size:14px;
+    padding:15px 0 15px 0;
+}
+.input_container {
+    padding:0 20px 0 0;
+    box-sizing:border-box;
+}
+.load_btn {
+    margin:0 0 0 20px ;
+    box-sizing:border-box;
+}

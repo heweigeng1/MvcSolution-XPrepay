@@ -1,0 +1,131 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="http://g.alicdn.com/sui/sui3/0.0.18/css/sui.css">
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: "Microsoft YaHei";
+        }
+
+        body {
+            background-image: url('../Areas/Public/css/images/login/bg.jpg');
+            background-size: cover;
+        }
+
+        .container {
+            padding-top: 200px;
+            width: 600px !important;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+            font-size: 16px;
+        }
+
+            .container H1 {
+                text-align: center;
+                color: whitesmoke;
+                padding: 10px;
+            }
+
+        .login {
+            padding: 15px;
+            background: rgba(255,255,255,.45);
+            border-radius: 5px;
+        }
+
+        .form-control {
+            height: 35px;
+        }
+
+        .row {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="password"] {
+            font-family: "Microsoft YaHei";
+            font-size: 16px;
+            border-radius: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    </style>
+    <script type="text/javascript" src="http://g.alicdn.com/sj/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="http://g.alicdn.com/sui/sui3/0.0.18/js/sui.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="login">
+            <h1>Xprepay Stytem</h1>
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-md-8"><input id="UserName" type="text" class="form-control" placeholder="LoginName" /></div>
+                <div class="col-lg-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-md-8"><input id="Password" type="password" class="form-control" placeholder="Password" /></div>
+                <div class="col-lg-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-md-6"><button id="login" data-placement="bottom" data-trigger="click" class="btn btn-primary btn-xl btn-block">LOGIN</button></div>
+                <div class="col-lg-3"></div>
+            </div>
+        </div>
+        <div class="row" id="msgbody" style="display:none;width:80%;margin-left:auto;margin-right:auto;margin-top:10px">
+
+        </div>
+    </div>
+</body>
+</html>
+<script id="msgbox" type="text/html">
+    <div class="alert alert-warning alert-dismissible" role="alert" >
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>警告!</strong> ##
+    </div>
+</script>
+<script type="text/javascript">
+    function loginModel() {
+        return {
+            UserName: $("#UserName").val(),
+            Password: $("#Password").val(),
+        }
+    }
+    var returnUrl = $(this).data("returnurl");
+
+    $("#login").click(function () {
+        $.post("/home/login", loginModel(), function (data) {
+            if (data.Success) {
+                window.location.href = "/admin"
+            } else {
+                console.log(data);
+                var test = $("#msgbox").html();
+                test = test.replace("##", data.Message);
+                $("#msgbody").html(test);
+                $("#msgbody").fadeIn(500);
+                setTimeout("hide()", 5000);
+            }
+        });
+    });
+    function hide() {
+        $("#msgbody").fadeOut(1500);
+    }
+</script>

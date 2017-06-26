@@ -1,0 +1,81 @@
+﻿
+@model LayoutViewModel
+@if (Request.IsAuthenticated)
+{
+    <ul class="nav-list clearfix">
+        <li class="nav-item"><a class="active" href="javascript:;"><i></i>首页</a></li>
+        <li class="nav-item">
+            <a href="#" class="drop-toggle"><i class="sui-icon icon-touch-todo-add"></i><span>基础资料</span></a>
+            <ul class="nav-menu clearfix">
+                <li class="menu-item"><a href="/admin/role">角色管理</a></li>
+                <li class="menu-item"><a href="/admin/user">用户管理</a></li>
+                <li class="menu-item"><a href="@Url.Action("Index","Area")">地址管理</a></li>
+                <li class="menu-item"><a href="@Url.Action("Index","PrimaryIndustry")">第一产业基础数据</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="drop-toggle"><i></i>数据录入</a>
+            <ul class="nav-menu clearfix">
+                <li class="menu-item"><a href="@Url.Action("PrimaryIndustrydata","PrimaryIndustry")">第一产业数据录入</a></li>
+                <li class="menu-item"><a href="#">目录2</a></li>
+                <li class="menu-item"><a href="#">目录3</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="drop-toggle"><i></i>上报平台</a>
+            <ul class="nav-menu clearfix">
+                <li class="menu-item"><a href="/admin/AreaQuarterStatistic">报表上报</a></li>
+                <li class="menu-item"><a href="#">目录2</a></li>
+                <li class="menu-item"><a href="#">目录3</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="drop-toggle"><i></i>数据核算</a>
+            <ul class="nav-menu clearfix">
+                <li class="menu-item"><a href="#">目录1</a></li>
+                <li class="menu-item"><a href="#">目录2</a></li>
+                <li class="menu-item"><a href="#">目录3</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="drop-toggle"><i></i>可视化报表</a>
+            <ul class="nav-menu clearfix">
+                <li class="menu-item"><a href="#">目录1</a></li>
+                <li class="menu-item"><a href="#">目录2</a></li>
+                <li class="menu-item"><a href="#">目录3</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="drop-toggle"><i></i>数据导出</a>
+            <ul class="nav-menu clearfix">
+                <li class="menu-item"><a href="#">目录1</a></li>
+                <li class="menu-item"><a href="#">目录2</a></li>
+                <li class="menu-item"><a href="#">目录3</a></li>
+            </ul>
+        </li>
+        <li class="nav-item"><a href="javascript:;"><i></i>栏目四</a></li>
+    </ul>
+}
+else
+{
+    <ul class="nav-list clearfix">
+        <li class="nav-item"><a class="active" href="javascript:;"><i></i>栏目一</a></li>
+        <li class="nav-item">
+            <a href="#" class="drop-toggle"><i></i>栏目二</a>
+            <ul class="nav-menu clearfix">
+                <li class="menu-item"><a href="#">目录1</a></li>
+                <li class="menu-item"><a href="#">目录2</a></li>
+                <li class="menu-item"><a href="#">目录3</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="drop-toggle"><i></i>栏目三</a>
+            <ul class="nav-menu clearfix">
+                <li class="menu-item"><a href="#">目录1</a></li>
+                <li class="menu-item"><a href="#">目录2</a></li>
+                <li class="menu-item"><a href="#">目录3</a></li>
+            </ul>
+        </li>
+        <li class="nav-item"><a href="javascript:;"><i></i>栏目四</a></li>
+    </ul>
+}

@@ -1,0 +1,311 @@
+﻿<div id="search" class="layui-form layui-form-pane" style="margin-top: 15px;">
+    <div class="layui-form-item">
+        <div class="layui-input-inline">
+            <button id="add" class="layui-btn layui-btn">添加</button>
+        </div>
+        <label class="layui-form-label">加入时间</label>
+        <div class="layui-input-inline">
+            <input class="layui-input" placeholder="开始日" id="StarTime">
+        </div>
+        <div class="layui-input-inline">
+            <input class="layui-input" placeholder="截止日" id="EndTime">
+        </div>
+        <div class="layui-input-inline">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <select id="State">
+                    <option value="-99">全部</option>
+                    <option value="0">正常</option>
+                    <option value="-1">删除</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-input-inline">
+            <input id="Search" type="text" name="title" required lay-verify="required" placeholder="昵称" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+            <button id="gogogo" class="layui-btn">搜索</button>
+        </div>
+    </div>
+</div>
+<div id="view"></div>
+<div id="laypage"></div>
+@section javascript{
+    <script id="UserTable" type="text/html">
+        <table class="layui-table">
+            <colgroup>
+                <col width="150">
+                <col width="200">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>昵称</th>
+                    <th>加入时间</th>
+                    <th>签名</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{# for(var i = 0, len = d.length; i < len; i++){ }}
+                <tr>
+                    <td>{{i+1}}</td>
+                    <td>{{d[i].NickName}}</td>
+                    <td>{{layui.data.covTime(d[i].CreatedTime)}}</td>
+                    <td>{{d[i].UserName}}</td>
+                    <td>{{d[i].Delflag==0?"正常":"删除"}}</td>
+                    <td>
+                        <div class="layui-btn-group">
+                            <a href="#" class="custom-edit layui-btn layui-btn-primary layui-btn-small" data-id="{{d[i].Id}}">编辑</a>
+                            <a href="#" class="custom-editpw layui-btn layui-btn-primary layui-btn-small" data-id="{{d[i].Id}}">修改密码</a>
+                            <a href="#" class="custom-del layui-btn layui-btn-primary layui-btn-small" data-id="{{d[i].Id}}">{{d[i].Delflag==0?"删除":"恢复"}}</a>
+                        </div>
+                    </td>
+                </tr>
+                {{# } }}
+            </tbody>
+        </table>
+    </script>
+
+    <script id="userDialog" type="text/html">
+        <div class="model_alert">
+            <div class="input_container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账号</label>
+                    <div class="layui-input-inline">
+                        <input id="Id" type="hidden" />
+                        <input type="text" id="UserName" name="title" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input ">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-inline">
+                        <input id="Password" type="password" name="title" lay-verify="title" autocomplete="off" placeholder="请输入密码" class="layui-input ">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">昵称</label>
+                    <div class="layui-input-inline">
+                        <input id="NickName" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入昵称" class="layui-input ">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script>
+        layui.config({
+            base: '/Areas/Admin/js/admin/layui-ex/' //这是.js所在的目录
+        }).extend({ //设定模块别名
+            laydata: 'laydata', //laydata
+            covTime: 'covTime',//相对于上述base目录的子目录
+            tipsErr:"tipsErr"
+            });
+
+        //laydata表格控件|laydate 日期控件
+        layui.use(['laydata', 'form', 'laydate', 'covTime', 'layer', 'jquery', 'upload','tipsErr'], function () {
+            var $ = layui.jquery;
+            var form = layui.form();
+            var laydata = layui.laydata;//表格+分页
+            var laydate = layui.laydate;//日期控件
+            var covTime = layui.covTime;//格式化时间
+            var tipsErr = layui.tipsErr;
+            function getUserModel(layero) {
+                return {
+                    Id: $(layero).find("#Id").val(),
+                    UserName: $(layero).find("#UserName").val(),
+                    Password: $(layero).find("#Password").val(),
+                    NickName: $(layero).find("#NickName").val(),
+                };
+            }
+            function setUserModel(layero, data) {
+                Id: $(layero).find("#Id").val(data.Id),
+                $(layero).find('#UserName').val(data.UserName);
+                $(layero).find('#Password').addClass("layui-disabled").attr("disabled", "disabled");
+                $(layero).find('#NickName').val(data.NickName);
+            }
+            function setPassword(layero, data) {
+                Id: $(layero).find("#Id").val(data.Id),
+                $(layero).find('#UserName').val(data.UserName).addClass("layui-disabled").attr("disabled", "disabled");
+                $(layero).find('#NickName').val(data.NickName).addClass("layui-disabled").attr("disabled", "disabled");
+            }
+            var layer =top.layer//加上top 就是顶层弹窗
+            $("#add").click(function () {
+                //0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）。
+                layer.open({
+                    type: 1,
+                    btn: ['提交', '取消'],
+                    btn1: function (index, layero) {
+                        $.post("@Url.Action("Add","User")", getUserModel(layero), function (data) {
+                            if (data.State==0) {
+                                layer.msg("添加成功", { time: 2000, icon: 1 })
+                                layer.close(index);
+                                table.laydata('reload', getParame());
+                            } else {
+                                tipsErr.output(data.Errors);
+                            }
+                        })
+                    },
+                    btn2: function (index, layero) {
+                        layer.close(index);
+                    },
+                    success: function (layero, index) {
+                        top.layui.upload({
+                            url: 'common/FileUpload/UploadImg',
+                            ext: 'jpg|png|gif',
+                            before: function (input) {
+                                console.log(input);
+                            },
+                            success: function (res) {
+                                console.log(res);
+                                if (res.status == 0) {
+                                    image.val(res.url);
+                                } else {
+                                    layer.msg(res.msg, { icon: 5 });
+                                }
+                            }
+                        });
+                    },
+                    area: ["370px", "300px"],
+                    content: $("#userDialog").html(),//这里content是一个普通的String
+                });
+            });
+            //列表 编辑按钮
+            $("body").on("click", ".custom-edit", function () {
+               //0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）。
+                var id = $(this).data('id');
+                layer.open({
+                    title:"修改",
+                    type: 1,
+                    btn: ['提交', '取消'],
+                    btn1: function (index, layero) {
+                        $.post("@Url.Action("Update","User")", getUserModel(layero), function (data) {
+                            if (data.State==0) {
+                                layer.msg(data.Msg, { time: 2000, icon: 1 })
+                                layer.close(index);
+                                table.laydata('reload', getParame());
+                            } else {
+                                tipsErr.output(data.Errors);
+                            }
+                        })
+                    },
+                    btn2: function (index, layero) {
+                        layer.close(index);
+                    },
+                    success: function (layero, index) {
+                        $.post("@Url.Action("Get","User")", { id: id }, function (data) {
+                            setUserModel(layero, data);
+                        })
+                    },
+                    area: ["370px", "300px"],
+                    content: $("#userDialog").html(),//这里content是一个普通的String
+                });
+            })
+            //列表 修改密码
+            $("body").on("click", ".custom-editpw", function () {
+                //0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）。
+                var id = $(this).data('id');
+                layer.open({
+                    title: "修改",
+                    type: 1,
+                    btn: ['提交', '取消'],
+                    btn1: function (index, layero) {
+                        $.post("@Url.Action("ChangePassword", "User")", getUserModel(layero), function (data) {
+                            if (data.State == 0) {
+                                layer.msg(data.Msg, { time: 2000, icon: 1 })
+                                layer.close(index);
+                                table.laydata('reload', getParame());
+                            } else {
+                                tipsErr.output(data.Errors);
+                            }
+                        })
+                    },
+                    btn2: function (index, layero) {
+                        layer.close(index);
+                    },
+                    success: function (layero, index) {
+                        $.post("@Url.Action("Get","User")", { id: id }, function (data) {
+                            setPassword(layero, data);
+                        })
+                    },
+                    area: ["370px", "300px"],
+                    content: $("#userDialog").html(),//这里content是一个普通的String
+                });
+            });
+            $("body").on("click", ".custom-del", function () {
+                var id = $(this).data('id');
+                var msg = $(this).text();
+                console.log(id);
+                layer.msg('是否确认'+msg+'用户？', {
+                time: 0 //不自动关闭
+                , btn: ['确定', '取消']
+                , btn1: function (index) {
+                    $.post("@Url.Action("Delflag","User")", { id: id }, function (data) {
+                        if (data.State==0) {
+                            layer.msg(data.Msg, { time: 2000, icon: 1 })// icon 1 v ，2 X
+                            layer.close(index);
+                            table.laydata('reload', getParame());
+                        } else {
+                            layer.msg(data.Msg, { time: 2000, icon: 2 });
+                            layer.close(index);
+                        }
+                    })
+                }
+            });
+            });
+
+            //查询框参数
+            var getParame = function () {
+                return {
+                    StarTime: $('#StarTime').val(),
+                    EndTime: $('#EndTime').val(),
+                    Search: $("#Search").val(),
+                    State: $("#State").val(),
+                    PageIndex: 0,
+                    PageSize: 10,
+                    Sort: 'CreatedTime',
+                    SortDirection:2,//1asc 2desc
+                }
+            }
+            //初始化 表格
+          var table=  $("#view").laydata({
+                template: "UserTable",//模版
+                url: "@Url.Action("List","User")",//url
+                parame: getParame(),
+            });
+
+            //搜索按钮
+          $("#gogogo").click(function () {
+                table.laydata('reload', getParame());
+            })
+
+            //日期控件
+            var start = {
+                min: '2015-06-16 23:59:59',
+                max: '2099-06-16 23:59:59',
+                istoday: false,
+                choose: function (datas) {
+                    end.min = datas; //开始日选好后，重置结束日的最小日期
+                    end.start = datas //将结束日的初始值设定为开始日
+                }
+            };
+            var end = {
+                min: '2015-06-16 23:59:59'
+                , max: '2099-06-16 23:59:59'
+                , istoday: false
+                , choose: function (datas) {
+                    start.max = datas; //结束日选好后，重置开始日的最大日期
+                }
+            };
+            document.getElementById('StarTime').onclick = function () {
+                start.elem = this;
+                laydate(start);
+            }
+            document.getElementById('EndTime').onclick = function () {
+                end.elem = this
+                laydate(end);
+            }
+        });
+    </script>
+}

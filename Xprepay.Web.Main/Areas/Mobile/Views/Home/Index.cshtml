@@ -1,0 +1,308 @@
+﻿@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.cshtml";
+}
+@section css{
+    <style>
+        .infinite-scroll-preloader {
+            margin-top: -20px;
+        }
+
+         .add-container {
+            float: right;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            margin-top: -0.675rem;
+        }
+
+        .btn-cart-box {
+            float: left;
+            margin-right: 5px;
+            position: relative;
+            
+        }
+        .btn-cart-box .badge {
+            position: absolute;
+            right: -0.4rem;
+            top: -0.4rem;
+            text-align: center;
+            font-size: .6rem;
+            line-height: 0.9rem;
+            width: 0.9rem;
+            height: 0.9rem;
+            color: #fff;
+            background-color: #f00;
+            border-radius: 50%;
+            padding: 0;
+        }
+
+        .btn-cart-box a {
+            font-size: 30px;
+            font-weight: bold;
+            width: 1.4rem;
+            height: 1.4rem;
+            padding: 0;
+            line-height: 1.4rem;
+        }
+
+       .btn-cart-box:nth-child(1) a {
+            line-height: 1.2rem;
+        }
+
+        .card-content-1 .list-block {
+            display: inline-block;
+        }
+
+        .tom-btn {
+            display: block;
+            position: relative;
+            height: 2.5rem;
+            width: 100%;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            padding: 0 .5rem;
+            margin: 0;
+            font-family: inherit;
+            font-size: 1.2rem;
+            line-height: 2.5rem;
+            text-align: center;
+            text-decoration: none;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+            background: 0 0;
+        }
+    </style>
+}
+<div class="content infinite-scroll infinite-scroll-bottom" data-distance="50">
+    <div class="card-group">
+    </div>
+    <!-- 加载提示符 -->
+    <div class="infinite-scroll-preloader">
+        <div class="preloader"></div>
+    </div>
+</div>
+@section Popup{
+<div class="popover">
+    <!-- Popover's angle arrow -->
+    <div class="popover-angle"></div>
+
+    <!-- Popover content -->
+    <div class="popover-inner">
+        <input  type="hidden" id="CategoryId"/>
+        <div class="list-block list-block-category" data-val="">
+            <ul>
+                <!--菜单项-->
+                <!--<li><a href="#" class="list-button item-link close-popover">close popover</a></li>-->
+            </ul>
+        </div>
+    </div>
+</div>
+    <div class="panel panel-right panel-reveal theme-dark" id='panel-right'>
+        <div class="content-block">
+            <p>选择店铺</p>
+            <div class="item-input">
+                <select id="UserDistributor">
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+            </div>
+            <!-- Click on link with "close-panel" class will close panel -->
+            <p><a href="#" class="close-panel">关闭</a></p>
+        </div>
+    </div>
+}
+@section javascript{
+    <script id="productModel" type="text/template">
+        <div class="card">
+            <div class="card-content card-content-1">
+                <div class="list-block media-list">
+                    <ul>
+                        <li class="item-content">
+                            <div class="item-media">
+                                <img id="PicUrl" src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg" width="44" height="44">
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title Name">娃娃菜</div>
+                                </div>
+                                <div class="item-subtitle Remark">娃娃吃了爽歪歪</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="add-container">
+                    <span class="btn-cart-box del">
+                        <a href="#" class="button button-round">-</a>
+                    </span>
+                    <span class="btn-cart-box add">
+                        <a href="#" class="button button-round" data-cid="">+</a>
+                        <span style="display:none" class="badge">0</span>
+                    </span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <span></span>
+                <span>库存:<label class="Stock">100</label></span>
+            </div>
+        </div>
+    </script>
+    <script>
+        $(function () {
+            var loading = false;
+            // 最多可加载的条目
+            var maxItems = 100;
+
+            var Cart = [];
+            var num = 1;
+            
+            //商品栏 加减按钮,
+            $(document).on("click", ".add-container .btn-cart-box a", function () {
+                var id = $(this).data("cid");
+                var name = $(this).data("name");
+                var i = parseInt($("#" + id).text());
+                if ($(this).text() == "+") {
+                    i = i + 1;
+                    $("#" + id).text(i);
+                    $("#" + id).show();
+                } else {
+                    i = i - 1 <= 0 ? 0 : i - 1;
+                    $("#" + id).text(i);
+                    if (i == 0) {
+                        $("#" + id).hide();
+                    }
+                }
+                saveCookieCart({ CDName: name, Count: i, CommodityId: id });
+            });
+            
+            //左侧选择商品类型按钮
+            $(".pull-left").click(function () {
+                $.post("@Url.Action("GetList","Category",new { area="Admin"})", {}, function (data) {
+                    var ul = $(".list-block-category ul");
+                    ul.html('<li><a href="#" data-val="" class="list-button item-link">全部</a></li>');
+                    $.each(data, function (key, val) {
+                        ul.append(' <li><a href="#" data-val=' + val.Id + ' class="list-button item-link">' + val.CategoryName + '</a></li>')
+                    });
+                })
+            })
+            //商品类型选择栏按钮
+            $(document).on("click", ".list-block-category a", function () {
+                var id = $(this).data("val");
+                $("#CategoryId").val(id);
+                _pageIndex = 0;//页码
+                lastIndex = 0;//上次最后条数
+                $('.infinite-scroll-bottom .card-group').html("");
+                addItems(itemsPerLoad, 0);//重新加载数据
+            });
+            //右边选择店铺按钮
+            $(".pull-right").click(function () {
+              var select=  $(".distributor-name").data("val");
+                $.post("@Url.Action("GetUserDistributor", "User",new { area="Admin"})", {}, function (data) {
+                    $("#UserDistributor").html("");
+                    $("#UserDistributor").html("<option value=-1>请选择</option>");
+                    $.each(data, function (num, val) {
+                        $("#UserDistributor").append("<option value=" + val.Id + ">" + val.DistributorName+"</option>")
+                    })
+                    $("#UserDistributor").val(select);
+                });
+                $.openPanel("#panel-right");
+            })
+            $("#UserDistributor").change(function () {
+                var val = $(this).val();
+                var name = $(this).find("option:selected").text();
+                $(".distributor-name").attr("data-val", val)
+                $(".distributor-name").text(name);
+            })
+            
+            // 每次加载添加多少条目
+            var itemsPerLoad = 10;
+            var _pageIndex = 0;
+            function getParame() {
+                return {
+                    PageIndex: _pageIndex,
+                    PageSize: itemsPerLoad,
+                    Sort: 'CreatedTime',
+                    SortDirection: 2,
+                    State: 1,//上架
+                    CategoryId: $("#CategoryId").val(),
+                }
+            }
+            
+            function setTemplate(temp, data) {
+                $temp = $(temp);
+                $temp.find("img").attr("src", data.PicUrl);
+                $temp.find(".btn-cart-box a").attr("data-cid", data.Id);
+                $temp.find(".badge").attr("Id", data.Id);
+                $temp.find(".Name").text(data.Name);
+                $temp.find(".btn-cart-box a").attr("data-name", data.Name);
+                $temp.find(".Remark").text(data.Remark);
+                $temp.find(".Stock").text(data.Stock);
+                var cookie = $.cookie("cart");
+                console.log(cookie);
+                if (cookie && cookie != "[]") {
+                    Cart = JSON.parse(cookie);
+                    $.each(Cart, function (key, val) {
+                        if (val.CommodityId == data.Id) {
+                            $temp.find(".badge").text(val.Count);
+                            $temp.find(".badge").show();
+                        } else {
+                            $temp.find(".badge").text(0);
+                        }
+                    })
+                }
+                // 添加新条目
+                $('.infinite-scroll-bottom .card-group').append($temp);
+            }
+            function addItems(number, lastIndex) {
+                var temp = $("#productModel").html();
+                $.post("@Url.Action("List","Commodity",new { area="Admin"})", getParame(), function (data) {
+                    if (data.Value.length > 0) {
+                        $.each(data.Value, function (index, val) {
+                            setTemplate(temp, val);
+                        });
+                        lastIndex = data.length;
+                        _pageIndex = _pageIndex + 1;
+                        if (data.Value.length < 10) {
+                            $('.infinite-scroll-preloader').remove();
+                        }
+                    }
+                });
+            }
+            //预先加载
+            addItems(itemsPerLoad, 0);
+            // 上次加载的序号
+            var lastIndex = 0;
+
+            // 注册'infinite'事件处理函数
+            $(document).on('infinite', '.infinite-scroll-bottom', function () {
+                console.log(this);
+                // 如果正在加载，则退出
+                if (loading) return;
+                // 设置flag
+                loading = true;
+                // 模拟1s的加载过程
+                setTimeout(function () {
+                    // 重置加载flag
+                    loading = false;
+
+                    if (lastIndex >= maxItems) {
+                        // 加载完毕，则注销无限加载事件，以防不必要的加载
+                        $.detachInfiniteScroll($('.infinite-scroll'));
+                        // 删除加载提示符
+                        $('.infinite-scroll-preloader').remove();
+                        return;
+                    }
+
+                    // 添加新条目
+                    addItems(itemsPerLoad, lastIndex);
+                    // 更新最后加载的序号
+                    lastIndex = $('.list-container li').length;
+                    //容器发生改变,如果是js滚动，需要刷新滚动
+                    $.refreshScroller();
+                }, 1000);
+            });
+            $.init();
+        })
+    </script>
+}
