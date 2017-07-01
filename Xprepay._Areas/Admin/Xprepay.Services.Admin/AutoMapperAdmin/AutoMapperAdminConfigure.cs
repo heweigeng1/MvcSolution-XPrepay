@@ -20,6 +20,7 @@ namespace Xprepay.Services.Admin.AutoMapperAdmin
             CreateMap<Order, OrderDto>();
             CreateMap<Area, AreaDto>();
             CreateMap<Category, CategoryDto>();
+            CreateMap<OrderDetail, OrderDetailDto>();
         }
     }
 }

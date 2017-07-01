@@ -22,25 +22,19 @@
 <body>
     <div class="page-group">
         <div class="page page-current">
-            <header class="bar bar-nav">
-                <button class="button button-link button-nav pull-left open-popover">
-                    <span>&nbsp;</span>
-                    <span class="icon icon-app"></span>
-                </button>
-                <button class="button button-link button-nav pull-right">
-                    <span class="icon iconfont icon-store"></span>
-                    <span>&nbsp;</span>
-                </button>
-                <h1 class="title distributor-name" data-val="-1">未选择店铺</h1>
-            </header>
+            @RenderSection("header", false)
             <nav class="bar bar-tab">
                 <a class="tab-item" href="#">
                     <span class="icon iconfont icon-set bar-tab-me"></span>
                     <span class="tab-label">我的</span>
                 </a>
-                <a class="tab-item" href="#">
+                <a class="tab-item" href="@Url.Action("UserOrder", "MobileOrder", new {area="mobile" })">
                     <span class="icon iconfont icon-survey"></span>
                     <span class="tab-label">报损</span>
+                </a>
+                <a class="tab-item" href="#">
+                    <span class="icon iconfont icon-set bar-tab-me"></span>
+                    <span class="tab-label"></span>
                 </a>
                 <a id="btn-cart" class="tab-item" href="#">
                     <span class="icon iconfont icon-cart"></span>

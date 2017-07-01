@@ -24,7 +24,7 @@ namespace Xprepay.Services
             }
         }
 
-        public void Login(string username, string password)
+        public void Login(string username, string password,string url)
         {
             using (var db = base.NewDB())
             {
@@ -36,6 +36,13 @@ namespace Xprepay.Services
                 if (CryptoService.Md5HashEncrypt(password) != user.Password)
                 {
                     throw new KnownException("用户名或密码不正确!");
+                }
+                if (!url.ToLower().Contains("moblie"))
+                {
+                    if (user.UserType!=(int)EnumUserType.后台管理员)
+                    {
+                        throw new KnownException("非管理员帐号!");
+                    }
                 }
                 user.LastLoginTime = DateTime.Now;
                 db.SaveChanges();

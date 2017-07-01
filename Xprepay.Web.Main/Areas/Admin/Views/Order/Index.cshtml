@@ -41,7 +41,7 @@
     <script id="OrderTable" type="text/html">
         <table class="layui-table">
             <colgroup>
-                <col width="150">
+                <col width="80">
                 <col width="200">
                 <col>
             </colgroup>
@@ -67,8 +67,7 @@
                     <td>{{d[i].Status==0?"下架":"上架"}}</td>
                     <td>
                         <div class="layui-btn-group">
-                            <a href="#" class="custom-editpw layui-btn layui-btn-primary layui-btn-small" data-id="{{d[i].Id}}">查看</a>
-                            <a href="#" class="custom-edit layui-btn layui-btn-primary layui-btn-small" data-id="{{d[i].Id}}">编辑</a>
+                            <a href="#" class="custom-info layui-btn layui-btn-primary layui-btn-small" data-id="{{d[i].Id}}">查看</a>
                             <a href="#" class="custom-state layui-btn layui-btn-primary layui-btn-small" data-id="{{d[i].Id}}">{{d[i].Status==0?"上架":"下架"}}</a>
                         </div>
                     </td>
@@ -82,23 +81,41 @@
         <div class="model_alert">
             <div class="input_container">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">商品名称</label>
-                    <div class="layui-input-inline">
-                        <input id="Id" type="hidden" />
-                        <input type="text" id="Name" name="title" lay-verify="title" autocomplete="off" placeholder="请输入商品明" class="layui-input ">
-                    </div>
+                    <label class="layui-form-label">订单号：{{d.OrderNum}}</label>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">售价</label>
-                    <div class="layui-input-inline">
-                        <input id="Price" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="售价" class="layui-input ">
-                    </div>
+                    <label class="layui-form-label">金额：{{d.Money}}</label>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">库存</label>
-                    <div class="layui-input-inline">
-                        <input id="Stock" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="库存" class="layui-input ">
-                    </div>
+                    <label class="layui-form-label">下单时间：{{layui.data.covTime(d.CreatedTime)}}</label>
+                </div>
+                <div class="layui-form-item">
+                        <table class="layui-table" lay-even="" lay-skin="row">
+                            <colgroup>
+                                <col width="150">
+                                <col width="100">
+                                <col width="150">
+                                <col>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>商品</th>
+                                    <th>金额</th>
+                                    <th>数量</th>
+                                    <th>总价</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#  for(var i = 0, len = d.OrderDetails.length; i < len; i++){ }}
+                                <tr>
+                                    <td>{{d.OrderDetails[i].CDName}}</td>
+                                    <td>{{d.OrderDetails[i].CDPrice}}</td>
+                                    <td>{{d.OrderDetails[i].Count}}</td>
+                                    <td>{{d.OrderDetails[i].Total}}</td>
+                                </tr>
+                                {{# } }}
+                            </tbody>
+                        </table>  
                 </div>
             </div>
         </div>
@@ -113,13 +130,14 @@
             });
 
         //laydata表格控件|laydate 日期控件
-        layui.use(['laydata', 'form', 'laydate', 'covTime', 'layer', 'jquery', 'upload','tipsErr'], function () {
+        layui.use(['laydata', 'form', 'laydate', 'covTime', 'layer', 'jquery', 'upload', 'tipsErr','laytpl'], function () {
             var $ = layui.jquery;
             var form = layui.form();
             var laydata = layui.laydata;//表格+分页
             var laydate = layui.laydate;//日期控件
             var covTime = layui.covTime;//格式化时间
             var tipsErr = layui.tipsErr;
+            var laytpl = layui.laytpl;
             function getOrderModel(layero) {
                 return {
                     Id: $(layero).find("#Id").val(),
@@ -129,10 +147,12 @@
                 };
             }
             function setOrderModel(layero, data) {
-                $(layero).find("#Id").val(data.Id);
-                $(layero).find('#Name').val(data.Name);
-                $(layero).find('#Price').val(data.Price);
-                $(layero).find('#Stock').val(data.Stock);
+                var temp = $(layero).html();
+                //console.log(temp);
+              laytpl(temp).render(data, function (html) {
+                  console.log(temp);
+                  console.log(html);
+                });
             }
             var layer =top.layer//加上top 就是顶层弹窗
             $("#add").click(function () {
@@ -175,43 +195,32 @@
                     content: $("#OrderDialog").html(),//这里content是一个普通的String
                 });
             });
-            //列表 编辑按钮
-            $("body").on("click", ".custom-edit", function () {
+
+            //列表 查看按钮
+            $("body").on("click", ".custom-info", function () {
                //0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）。
+                var temp = document.getElementById("OrderDialog").innerHTML;
                 var id = $(this).data('id');
                 layer.open({
-                    title:"修改",
+                    title:"查看",
                     type: 1,
-                    btn: ['提交', '取消'],
-                    btn1: function (index, layero) {
-                        $.post("@Url.Action("Update","Order")", getOrderModel(layero), function (data) {
-                            if (data.State==0) {
-                                layer.msg(data.Msg, { time: 2000, icon: 1 })
-                                layer.close(index);
-                                table.laydata('reload', getParame());
-                            } else {
-                                tipsErr.output(data.Errors);
-                            }
-                        })
-                    },
-                    btn2: function (index, layero) {
-                        layer.close(index);
-                    },
                     success: function (layero, index) {
                         $.post("@Url.Action("Get","Order")", { id: id }, function (data) {
                             console.log(data);
-                            setOrderModel(layero, data);
-                        })
+                            laytpl(temp).render(data, function (html) {
+                                $(layero).find(".layui-layer-content").html(html);
+                            });
+                        });
                     },
-                    area: ["370px", "300px"],
+                    area: ["670px", "600px"],
                     content: $("#OrderDialog").html(),//这里content是一个普通的String
                 });
             })
+
             $("body").on("click", ".custom-state", function () {
                 var id = $(this).data('id');
                 var msg = $(this).text();
-                console.log(id);
-                layer.msg('是否确认'+msg+'商品？', {
+                layer.msg('是否确认'+msg+'订单？', {
                 time: 0 //不自动关闭
                 , btn: ['确定', '取消']
                 , btn1: function (index) {

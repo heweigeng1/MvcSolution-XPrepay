@@ -1,12 +1,5 @@
-using FluentValidation;
-using FluentValidation.Results;
-using System;
 using System.Web.Mvc;
 using System.Web.Security;
-using Xprepay.Data.Entities;
-using Xprepay.Services.Mobile;
-using Xprepay.Services.Mobile.SearchCriterias;
-using Xprepay.Web.Mobile.ViewModels.Validation;
 using Xprepay.Web.Security;
 using Xprepay.Web.ViewModels;
 

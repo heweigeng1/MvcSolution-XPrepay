@@ -1,81 +1,50 @@
-# About this repository
+# 介绍
 
-This repository is aimed to share our ASP.NET MVC architecture, which defines many of the coding standards to achieve clean code. We have enjoyed a lot of benifits from it:
+本项目是mvcsolution框架的分支.
 
-- few methods exceed 50 lines of code;
-- few code comments are written, as naming describes the methods themselves;
-- few file exceed 300 lines of code;
-- every line of code has its right place, one can quickly finish a new feature like configuration.
-
-This repository is a universal ASP.NET MVC architecture solution, including data access, role based authorization, mvc application lifetime, ajax, css, mvc routing, exception handling, Ioc, logging. 
+**原项目地址:[https://github.com/leotsai/mvcsolution/](https://github.com/leotsai/mvcsolution/)**
 
 
-We have been coding all our .NET projects based on this architecture since 2010. And we are keeping upgrading this architecture all the time to make it better and better.
+# 跟原项目的区别
+- autompper--映射组件
+- FluentValidation--校验组件
+- layui--后台模版
+- light7--mobile模版
+- webapi
+- mobile--移动网站
+- T4模板
 
-To make it more applicable to most projects and easier to understand, I have been trying to write the minimum code to describe the core value of this architecture. So you can find out it is very light weight.
+# 开发环境
 
-I also published this architecture online at [http://mvcsolution.985rencai.com](http://mvcsolution.985rencai.com) so that you can get a first look in a few minutes how it looks like. (Everyone can register as an admin by free and look into the admin control panel)
-
-Finally, please remember that this architecture is only a guide for you to architect your projects, and probably you need to customize it a little for your projects. I don't recommend you just copy the code and take it in use. Instead, I strongly recommend you read the documentation carefully, which is not only a simple doc but also a serials of architecture thinkings and considerations.
-
-# Development Environments & References
-
-* IDE:    **VS2015**
+* IDE:    **VS2015,VS2017**
 * NET Version: **4.5**
 * MVC Version: **5.2**
 * ORM: **Entity Framework 6.1**
 * Json Serialization: **Newtonsoft 8.0.1**
 * Unit Tests: **NUnit 2.5.10**
 
-# Projects References
+# 默认登录帐号
+请查看**Xprepay.Data**下的初始化类**Init**;
 
-First, take a look at the projects and their reference relationships.
+# 初学者学习指南
+- MVC基础
+- EF基础
+- code frist
+- linq 与 lambda表达式
+- 了解IOC
+- 阅读Mvcsolution项目的资料
 
-![references](https://raw.githubusercontent.com/leotsai/mvcsolution/master/_doc/images/project%20references.jpg)
+# 提示
+* 不能右键添加控制器
+* 不能在控制器右键跳转到视图
 
-# Documentation Index
+# 将来
+* 将日志系统改为log4.net
+* 后台修改为ng 或者vue,react框架的UI
+* 权限 是否改为微软的Identity组件,还在思考
+* 升级为.net core版本
+* 微信开发的一些类库
+* 支付的demo
 
-### [01.Get Started](https://github.com/leotsai/mvcsolution/blob/master/_doc/01.get-started.md)
-* Compile
-* Initialize Database
-* Run the Web Application
-* Publish
-* Conclusion
-
-### [02. Architecture Overview](https://github.com/leotsai/mvcsolution/blob/master/_doc/02.architecture-overview.md)
-* Projects References
-*	Application Start
-*	MVC Areas & Routes
-*	AppContext & SettingsContext
-*	Exception Handling
-*	Error Logging 
-*	IOC
-*	Manage External DLLs
-
-### [03. Data Access](https://github.com/leotsai/mvcsolution/blob/master/_doc/03.data-access.md)
-* Database & Tables Definition
-* Access to Database CRUD
-* Data Migration
-
-### [04. Role Based Authorization](https://github.com/leotsai/mvcsolution/blob/master/_doc/04.role-based-authorization.md)
-* Login 
-* Logout
-* Session
-* Cookies
-
-### [05. Grunt & JS Architecture](https://github.com/leotsai/mvcsolution/blob/master/_doc/05.grunt-js-architecture.md)
-* Install Grunt
-* Grunt Config & JS File Structore
-
-### [06. CSS Architecture](https://github.com/leotsai/mvcsolution/blob/master/_doc/06.css-architecture.md)
-
-### [07. MISC](https://github.com/leotsai/mvcsolution/blob/master/_doc/07.misc.md)
-* Unit Tests
-* Grid
-
-
-
-
-
-# License
-MIT. Feel free to use and ask questions. I'm open to any discussion.
+# 最后
+如果您也有兴趣参与或使用这个项目,请加QQ群:539301714

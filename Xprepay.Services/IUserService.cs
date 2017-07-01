@@ -6,7 +6,7 @@ namespace Xprepay.Services
     public interface IUserService
     {
         SessionUser GetSessionUser(Guid userId);
-        void Login(string username, string password);
+        void Login(string username, string password,string url);
         User Get(Guid id);
         User Get(string username);
         void Register(string username, string password, bool registerAsAdmin);

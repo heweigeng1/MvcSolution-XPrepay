@@ -88,5 +88,9 @@ namespace Xprepay.Web.Mobile.Controllers
             var data = Ioc.Get<IMobileOrderService>().PlaceAnOrder(bind);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult UserOrder()
+        {
+            return View();
+        }
     }
 }

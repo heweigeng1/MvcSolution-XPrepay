@@ -15,10 +15,15 @@ namespace Xprepay.Web.Security
         {
             this.Roles = roles;
         }
+        public MvcAuthorizeAttribute(int type)
+        {
+          
+        }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             var actionAttrs = filterContext.ActionDescriptor.GetCustomAttributes(true);
+
             if (actionAttrs.Any(x => x is AllowAnonymousAttribute))
             {
                 return;

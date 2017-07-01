@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Net;
+using System.Web;
+using System.Web.Mvc;
 using Xprepay.Services;
 using Xprepay.Web.ViewModels;
 
@@ -15,6 +17,7 @@ namespace Xprepay.Web.Public.Controllers
         [HttpPost]
         public StandardJsonResult Login(string UserName, string Password)
         {
+           var url= HttpContext.Request.UrlReferrer.AbsolutePath;
             return base.Try(() =>
             {
                 if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
@@ -22,7 +25,7 @@ namespace Xprepay.Web.Public.Controllers
                     throw new KnownException("请输入用户名与密码");
                 }
                 var service = Ioc.Get<IUserService>();
-                service.Login(UserName, Password);
+                service.Login(UserName, Password,url);
                 var user = service.Get(UserName);
                 base.LoginUser(user.Id);
             });

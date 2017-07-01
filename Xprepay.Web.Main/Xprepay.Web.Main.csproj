@@ -342,6 +342,7 @@
     <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.eot" />
     <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.ttf" />
     <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.woff" />
+    <Content Include="Areas\Mobile\Views\MobileOrder\UserOrder.cshtml" />
     <None Include="packages.config" />
     <Content Include="Areas\Public\Views\_Shared\Error.cshtml" />
     <Content Include="Areas\Public\Views\_Shared\Message.cshtml" />

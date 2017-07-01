@@ -81,6 +81,7 @@
     <Compile Include="Dtos\CommodityDto.cs" />
     <Compile Include="Dtos\DistributorDto.cs" />
     <Compile Include="Dtos\Execl_OrderDetailDto.cs" />
+    <Compile Include="Dtos\OrderDetailDto.cs" />
     <Compile Include="Dtos\OrderDto.cs" />
     <Compile Include="Dtos\RoleDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />

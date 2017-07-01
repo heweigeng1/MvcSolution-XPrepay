@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.Security;
+using Xprepay.Services;
 
 namespace Xprepay
 {
@@ -13,6 +14,14 @@ namespace Xprepay
                 return HttpContext.Current.Session.GetMvcSession().User.Id;
             }
             return Guid.Empty;
+        }
+        public static SessionUser GetUserSession(this HttpRequestBase request)
+        {
+            if (request.IsAuthenticated)
+            {
+                return HttpContext.Current.Session.GetMvcSession().User;
+            }
+            return null;
         }
 
         public static Guid GetUserId(this HttpRequest request)

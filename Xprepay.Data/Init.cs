@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xprepay.Data.Enums;
 
 namespace Xprepay.Data
@@ -36,6 +32,7 @@ namespace Xprepay.Data
             });
             context.UserRoleRLs.Add(new UserRoleRL
             {
+                Id=Guid.NewGuid(),
                 CreatedTime = DateTime.Now,
                 LastUpdatedTime = DateTime.Now,
                 RoleId = role.Id,

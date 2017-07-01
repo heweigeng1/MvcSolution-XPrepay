@@ -5,6 +5,7 @@ using Xprepay.Services.Admin.Dtos;
 using Xprepay.Data.Entities;
 using System;
 using System.Collections.Generic;
+using Xprepay.Data;
 
 namespace Xprepay.Services.Admin.Dtos
 {
@@ -54,6 +55,7 @@ namespace Xprepay.Services.Admin.Dtos
         /// 下单时间
         /// </summary>
         public DateTime? OrderTime { get; set; }
+        public List<OrderDetailDto> OrderDetails { get; set; } = new List<OrderDetailDto>();
     }
 }
 

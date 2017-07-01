@@ -7,7 +7,7 @@
             margin-top: -20px;
         }
 
-         .add-container {
+        .add-container {
             float: right;
             position: absolute;
             right: 10px;
@@ -19,35 +19,35 @@
             float: left;
             margin-right: 5px;
             position: relative;
-            
-        }
-        .btn-cart-box .badge {
-            position: absolute;
-            right: -0.4rem;
-            top: -0.4rem;
-            text-align: center;
-            font-size: .6rem;
-            line-height: 0.9rem;
-            width: 0.9rem;
-            height: 0.9rem;
-            color: #fff;
-            background-color: #f00;
-            border-radius: 50%;
-            padding: 0;
         }
 
-        .btn-cart-box a {
-            font-size: 30px;
-            font-weight: bold;
-            width: 1.4rem;
-            height: 1.4rem;
-            padding: 0;
-            line-height: 1.4rem;
-        }
+            .btn-cart-box .badge {
+                position: absolute;
+                right: -0.4rem;
+                top: -0.4rem;
+                text-align: center;
+                font-size: .6rem;
+                line-height: 0.9rem;
+                width: 0.9rem;
+                height: 0.9rem;
+                color: #fff;
+                background-color: #f00;
+                border-radius: 50%;
+                padding: 0;
+            }
 
-       .btn-cart-box:nth-child(1) a {
-            line-height: 1.2rem;
-        }
+            .btn-cart-box a {
+                font-size: 30px;
+                font-weight: bold;
+                width: 1.4rem;
+                height: 1.4rem;
+                padding: 0;
+                line-height: 1.4rem;
+            }
+
+            .btn-cart-box:nth-child(1) a {
+                line-height: 1.2rem;
+            }
 
         .card-content-1 .list-block {
             display: inline-block;
@@ -75,6 +75,19 @@
         }
     </style>
 }
+@section header{
+<header class="bar bar-nav">
+    <button class="button button-link button-nav pull-left open-popover">
+        <span>&nbsp;</span>
+        <span class="icon icon-app"></span>
+    </button>
+    <button class="button button-link button-nav pull-right">
+        <span class="icon iconfont icon-store"></span>
+        <span>&nbsp;</span>
+    </button>
+    <h1 class="title distributor-name" data-val="-1">未选择店铺</h1>
+</header>
+}
 <div class="content infinite-scroll infinite-scroll-bottom" data-distance="50">
     <div class="card-group">
     </div>
@@ -84,21 +97,21 @@
     </div>
 </div>
 @section Popup{
-<div class="popover">
-    <!-- Popover's angle arrow -->
-    <div class="popover-angle"></div>
+    <div class="popover">
+        <!-- Popover's angle arrow -->
+        <div class="popover-angle"></div>
 
-    <!-- Popover content -->
-    <div class="popover-inner">
-        <input  type="hidden" id="CategoryId"/>
-        <div class="list-block list-block-category" data-val="">
-            <ul>
-                <!--菜单项-->
-                <!--<li><a href="#" class="list-button item-link close-popover">close popover</a></li>-->
-            </ul>
+        <!-- Popover content -->
+        <div class="popover-inner">
+            <input type="hidden" id="CategoryId" />
+            <div class="list-block list-block-category" data-val="">
+                <ul>
+                    <!--菜单项-->
+                    <!--<li><a href="#" class="list-button item-link close-popover">close popover</a></li>-->
+                </ul>
+            </div>
         </div>
     </div>
-</div>
     <div class="panel panel-right panel-reveal theme-dark" id='panel-right'>
         <div class="content-block">
             <p>选择店铺</p>
@@ -156,7 +169,7 @@
 
             var Cart = [];
             var num = 1;
-            
+
             //商品栏 加减按钮,
             $(document).on("click", ".add-container .btn-cart-box a", function () {
                 var id = $(this).data("cid");
@@ -175,7 +188,7 @@
                 }
                 saveCookieCart({ CDName: name, Count: i, CommodityId: id });
             });
-            
+
             //左侧选择商品类型按钮
             $(".pull-left").click(function () {
                 $.post("@Url.Action("GetList","Category",new { area="Admin"})", {}, function (data) {
@@ -214,7 +227,7 @@
                 $(".distributor-name").attr("data-val", val)
                 $(".distributor-name").text(name);
             })
-            
+
             // 每次加载添加多少条目
             var itemsPerLoad = 10;
             var _pageIndex = 0;
@@ -228,7 +241,7 @@
                     CategoryId: $("#CategoryId").val(),
                 }
             }
-            
+
             function setTemplate(temp, data) {
                 $temp = $(temp);
                 $temp.find("img").attr("src", data.PicUrl);

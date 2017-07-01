@@ -13,13 +13,14 @@ namespace Xprepay.Data.Entities
         public virtual Commodity Commodity { get; set; }
         public int Count { get; set; }
         /// <summary>
-        /// 商品价钱
-        /// </summary>
-        public decimal? CDPrice { get; set; }
-        /// <summary>
         /// 总价
         /// </summary>
         public decimal? Total { get { return CDPrice * Count; } }
+        /// <summary>
+        /// 商品价钱
+        /// </summary>
+        public decimal? CDPrice { get; set; }
+
         /// <summary>
         /// 商品名称
         /// </summary>

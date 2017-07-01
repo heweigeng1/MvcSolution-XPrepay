@@ -56,7 +56,7 @@ namespace Xprepay.Services.Admin.Implementations
         {
             using (var db=base.NewDB())
             {
-                return db.Orders.Find(id).ToDto();
+                return db.Orders.Find(id).ToDto().Bulid(db);
             }
         }
 
