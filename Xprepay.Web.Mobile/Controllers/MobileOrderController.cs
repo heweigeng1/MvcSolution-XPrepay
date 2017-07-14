@@ -2,7 +2,6 @@
 using FluentValidation;
 using FluentValidation.Results;
 using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using Xprepay.Data.Entities;
 using Xprepay.Services.Mobile;

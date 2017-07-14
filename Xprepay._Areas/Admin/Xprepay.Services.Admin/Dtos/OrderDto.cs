@@ -5,7 +5,6 @@ using Xprepay.Services.Admin.Dtos;
 using Xprepay.Data.Entities;
 using System;
 using System.Collections.Generic;
-using Xprepay.Data;
 
 namespace Xprepay.Services.Admin.Dtos
 {
