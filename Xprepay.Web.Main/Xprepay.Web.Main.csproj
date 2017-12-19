@@ -29,6 +29,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -343,6 +344,7 @@
     <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.ttf" />
     <Content Include="Areas\Mobile\css\font_zoeqsuhbh6jyk3xr\iconfont.woff" />
     <Content Include="Areas\Mobile\Views\MobileOrder\UserOrder.cshtml" />
+    <Content Include="log4net.config" />
     <None Include="packages.config" />
     <Content Include="Areas\Public\Views\_Shared\Error.cshtml" />
     <Content Include="Areas\Public\Views\_Shared\Message.cshtml" />
@@ -417,9 +419,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Public\Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\PublishProfiles\leo-laptop.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

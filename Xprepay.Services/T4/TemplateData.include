@@ -23,7 +23,7 @@ string WebNameSpace ="Xprepay.Web.Admin";
 string ControllerBase="AdminControllerBase";
 
 string enetiyName="Category";
- 
+  
 // Manager class records the various blocks so it can split them up
 class Manager {
     private class Block {

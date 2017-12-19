@@ -63,6 +63,7 @@ namespace Xprepay
             }
             catch (Exception ex)
             {
+                Log4Net.Error(ex.Source, ex);
                 this.Fail(ex.GetAllMessages());
             }
         }

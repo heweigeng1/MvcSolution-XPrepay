@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Routing;
 using Xprepay.Services;
 
@@ -10,6 +11,7 @@ namespace Xprepay.Web.Main
         {
             SettingContext.Instance.Init();
             AutoMapperConfigure.Configuration.Configure();//automapper
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
         }
 
         protected override void RegisterRoutes(RouteCollection routes)
@@ -30,6 +32,13 @@ namespace Xprepay.Web.Main
         protected override void RegisterIoc()
         {
             Ioc.RegisterInheritedTypes(typeof(ServiceBase).Assembly, typeof(ServiceBase));
+        }
+        /// <summary>
+        /// webapi start session
+        /// </summary>
+        protected void Application_PostAuthorizeRequest()
+        {
+            System.Web.HttpContext.Current.SetSessionStateBehavior(System.Web.SessionState.SessionStateBehavior.Required);
         }
     }
 }

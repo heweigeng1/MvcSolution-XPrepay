@@ -9,12 +9,11 @@ namespace Xprepay.Web.Controllers
     {
         private Type _actionReturnType;
         protected abstract string AreaName { get; }
-        
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var action = filterContext.ActionDescriptor as ReflectedActionDescriptor;
             if (action != null)
-
             {
                 _actionReturnType = action.MethodInfo.ReturnType;
             }
@@ -23,8 +22,12 @@ namespace Xprepay.Web.Controllers
 
         protected override void OnException(ExceptionContext filterContext)
         {
-            Logger.Error("XprepayControllerBase.OnException", filterContext.Exception);
-
+            //Logger.Error("XprepayControllerBase.OnException", filterContext.Exception);
+            //只记录系统错误.
+            if (filterContext.Exception is Exception)
+            {
+                Log4Net.Error(filterContext.Exception.Source, filterContext.Exception);
+            }
             if (_actionReturnType == null)
             {
                 base.OnException(filterContext);
@@ -39,15 +42,15 @@ namespace Xprepay.Web.Controllers
             {
                 error = filterContext.Exception.GetAllMessages();
             }
-            if (_actionReturnType == typeof (StandardJsonResult) || (_actionReturnType == typeof(StandardJsonResult<>)))
+            if (_actionReturnType == typeof(StandardJsonResult) || (_actionReturnType == typeof(StandardJsonResult<>)))
             {
                 var result = new StandardJsonResult();
                 result.Fail(error);
                 filterContext.Result = result;
             }
-            else if (_actionReturnType == typeof (PartialViewResult))
+            else if (_actionReturnType == typeof(PartialViewResult))
             {
-                filterContext.Result = new ContentResult() {Content = error};
+                filterContext.Result = new ContentResult() { Content = error };
             }
             else
             {
@@ -71,9 +74,9 @@ namespace Xprepay.Web.Controllers
         {
             var model = new LayoutViewModel();
             model.Error = message;
-            return View("~/areas/public/views/shared/error.cshtml" , model);
+            return View("~/areas/public/views/shared/error.cshtml", model);
         }
-        
+
         protected virtual ActionResult Message(string message)
         {
             var model = new LayoutViewModel<string>();
@@ -92,7 +95,7 @@ namespace Xprepay.Web.Controllers
             result.Try(action);
             return result;
         }
-        
+
         public StandardJsonResult<T> Try<T>(Func<T> action)
         {
             var result = new StandardJsonResult<T>();
@@ -118,7 +121,7 @@ namespace Xprepay.Web.Controllers
                 return Message(ex.GetAllMessages());
             }
         }
-        
+
         protected Guid GetUserId()
         {
             return Request.GetUserId();
