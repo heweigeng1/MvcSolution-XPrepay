@@ -19,7 +19,7 @@ namespace Xprepay.Web
             GlobalConfiguration.Configure(WebApiConfig.Register);
             this.RegisterRoutes(RouteTable.Routes);
             this.RegisterIoc();
-            ModelBinders.Binders.Add(typeof(Base64Image), new Base64ImageBinder());
+            //ModelBinders.Binders.Add(typeof(Base64Image), new Base64ImageBinder());
             this.OnApplicationStart();
         }
 

@@ -10,8 +10,8 @@ namespace Xprepay.Web.Main.AutoMapperConfigure
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.AddProfile<AutoMapperAdminConfigure>();
-                cfg.AddProfile<AutoMapperMobileConfigure>();
+                cfg.AddProfile(new AutoMapperAdminConfigure());
+                cfg.AddProfile(new AutoMapperMobileConfigure());
             });
         }
     }

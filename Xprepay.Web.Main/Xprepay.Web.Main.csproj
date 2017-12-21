@@ -49,8 +49,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=5.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -364,6 +364,14 @@
       <Project>{cd0718d0-4a31-4034-8e86-1c538a2ff0ad}</Project>
       <Name>Xprepay.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Xprepay.Services.Api\Xprepay.Services.WebApi.csproj">
+      <Project>{1a7a8e9b-9d1a-49a8-9ef3-88fe9f886fa0}</Project>
+      <Name>Xprepay.Services.WebApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay.Services.Management\Xprepay.Services.Management.csproj">
+      <Project>{b08618b3-fbc2-4797-b9b7-824bf3f5644b}</Project>
+      <Name>Xprepay.Services.Management</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xprepay.Services.Mobile\Xprepay.Services.Mobile.csproj">
       <Project>{83C712B1-C0D6-4117-B2F4-14ED76E1621B}</Project>
       <Name>Xprepay.Services.Mobile</Name>
@@ -375,6 +383,10 @@
     <ProjectReference Include="..\Xprepay.Web.Mobile\Xprepay.Web.Mobile.csproj">
       <Project>{ca8b8720-6e2e-4da9-997c-20e1217d5ddb}</Project>
       <Name>Xprepay.Web.Mobile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay.WebApi.Management\Xprepay.WebApi.Management.csproj">
+      <Project>{5ba232c5-0a39-42ec-9d03-3f25480dca79}</Project>
+      <Name>Xprepay.WebApi.Management</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xprepay.WebApi\Xprepay.WebApi.csproj">
       <Project>{0d4552b4-f441-4009-ac58-9a16301a9dbc}</Project>
@@ -406,6 +418,7 @@
     <Folder Include="Areas\Admin\Views\Setting\" />
     <Folder Include="Areas\Mobile\img\" />
     <Folder Include="Areas\Public\js\" />
+    <Folder Include="pro_ant_design\" />
     <Folder Include="src\" />
     <Folder Include="_js-source\_libs\admin\" />
     <Folder Include="_js-source\_libs\app\" />

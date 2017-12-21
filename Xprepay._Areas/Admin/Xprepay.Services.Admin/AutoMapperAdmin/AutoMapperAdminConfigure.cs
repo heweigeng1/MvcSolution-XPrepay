@@ -10,7 +10,7 @@ namespace Xprepay.Services.Admin.AutoMapperAdmin
 {
     public class AutoMapperAdminConfigure : Profile
     {
-        protected override void Configure()
+        public AutoMapperAdminConfigure()
         {
             CreateMap<Area, AreaDto>().ForMember(dest => dest.Delflag, opt => opt.MapFrom(src => Enum.GetName(typeof(EnumDelflag), src.Delflag)));
             CreateMap<Role, UserRoleDto>();

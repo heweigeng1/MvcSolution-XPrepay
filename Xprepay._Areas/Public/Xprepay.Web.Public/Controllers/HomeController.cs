@@ -25,7 +25,7 @@ namespace Xprepay.Web.Public.Controllers
                 {
                     throw new KnownException("请输入用户名与密码");
                 }
-              throw  new Exception("测试");
+              //throw  new Exception("测试");
                 var service = Ioc.Get<IUserService>();
                 service.Login(UserName, Password,url);
                 var user = service.Get(UserName);

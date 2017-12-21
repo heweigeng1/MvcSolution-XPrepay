@@ -9,7 +9,7 @@ namespace Xprepay.Services.Mobile.AutoMapperMobile
 {
     public class AutoMapperMobileConfigure : Profile
     {
-        protected override void Configure()
+        public AutoMapperMobileConfigure()
         {
             CreateMap<Order, MobileOrderDto>();
         }
