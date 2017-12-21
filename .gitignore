@@ -12,6 +12,7 @@
 
 # Build results
 [Dd]ebug/
+node_modules/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
