@@ -21,7 +21,6 @@ namespace Xprepay.Web.Main
             routes.Map("img/{size}/t{imageType}t{yearMonth}-{id}.{format}", "image", "index", Common);
             routes.Map("img/{size}/{parameter}", "image", "index", Common);
             routes.Map("common/{controler}/{action}/{id}", new { controller = "FileUpload", action = "UploadFile", id = UrlParameter.Optional }, Common);
-            
             var ns = new[] { "Xprepay.Web.Public.Controllers.*" };
             var defaults = new { controller = "Home", action = "Login", id = UrlParameter.Optional };
 

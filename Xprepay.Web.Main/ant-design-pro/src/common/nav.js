@@ -192,6 +192,11 @@ export const getNavData = app => [
             path: 'register-result',
             component: dynamicWrapper(app, [], () => import('../routes/User/RegisterResult')),
           },
+          {
+            name: '测试',
+            path: 'testone',
+            component: dynamicWrapper(app, ['testone'], () => import('../routes/User/TestOne')),
+          },
         ],
       },
     ],

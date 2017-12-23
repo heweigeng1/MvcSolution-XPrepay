@@ -53,7 +53,6 @@ export default class Login extends Component {
       }
     );
   }
-
   renderMessage = (message) => {
     return (
       <Alert
@@ -91,7 +90,7 @@ export default class Login extends Component {
                     prefix={<Icon type="user" className={styles.prefixIcon} />}
                     placeholder="admin"
                   />
-                )}
+                  )}
               </FormItem>
               <FormItem>
                 {getFieldDecorator('password', {
@@ -105,7 +104,7 @@ export default class Login extends Component {
                     type="password"
                     placeholder="888888"
                   />
-                )}
+                  )}
               </FormItem>
             </TabPane>
             <TabPane tab="手机号登录" key="mobile">
@@ -128,7 +127,7 @@ export default class Login extends Component {
                     prefix={<Icon type="mobile" className={styles.prefixIcon} />}
                     placeholder="手机号"
                   />
-                )}
+                  )}
               </FormItem>
               <FormItem>
                 <Row gutter={8}>
@@ -143,7 +142,7 @@ export default class Login extends Component {
                         prefix={<Icon type="mail" className={styles.prefixIcon} />}
                         placeholder="验证码"
                       />
-                    )}
+                      )}
                   </Col>
                   <Col span={8}>
                     <Button
@@ -165,7 +164,7 @@ export default class Login extends Component {
               initialValue: true,
             })(
               <Checkbox className={styles.autoLogin}>自动登录</Checkbox>
-            )}
+              )}
             <a className={styles.forgot} href="">忘记密码</a>
             <Button size="large" loading={login.submitting} className={styles.submit} type="primary" htmlType="submit">
               登录

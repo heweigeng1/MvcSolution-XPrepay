@@ -20,5 +20,7 @@
   },
   "ignoreMomentLocale": true,
   "theme": "./src/theme.js",
-  "hash": true
+  "hash": true,
+  "publicPath": "/ant-design-pro/dist/"
+
 }
