@@ -10,9 +10,16 @@ import styles from './Login.less';
 }))
 export default class TestOne extends Component {
 
+    state={
+        count:90,
+    }
+
     testoneclick = () => {
         this.props.dispatch({
             type: 'testone/test1',
+            payload:{
+                count:this.state.count
+            }
         })
     }
 
@@ -20,7 +27,7 @@ export default class TestOne extends Component {
         const { testone } = this.props;
         return <div>
             <Button size="large" onClick={this.testoneclick} className={styles.Button} type="primary" >
-                测试{testone.text}
+                测试{testone.text}/{testone.myage}
             </Button></div>
     }
 }
