@@ -80,6 +80,11 @@ export const getNavData = app => [
             component: dynamicWrapper(app, ['rule'], () => import('../routes/List/TableList')),
           },
           {
+            name: '用户权限',
+            path: 'role-list',
+            component: dynamicWrapper(app, ['role'], () => import('../routes/List/RoleTable')),
+          },
+          {
             name: '标准列表',
             path: 'basic-list',
             component: dynamicWrapper(app, ['list'], () => import('../routes/List/BasicList')),

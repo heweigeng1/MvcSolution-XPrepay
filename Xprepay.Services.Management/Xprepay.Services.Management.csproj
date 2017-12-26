@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\RoleDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,7 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AutoMapper\" />
-    <Folder Include="Dtos\" />
     <Folder Include="Implementations\" />
     <Folder Include="SearchCriterias\" />
   </ItemGroup>

@@ -66,6 +66,10 @@
       <Project>{3593818e-2b60-41a8-b5ba-de479b6a5d51}</Project>
       <Name>Xprepay.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Xprepay.Services.Management\Xprepay.Services.Management.csproj">
+      <Project>{b08618b3-fbc2-4797-b9b7-824bf3f5644b}</Project>
+      <Name>Xprepay.Services.Management</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xprepay.Services\Xprepay.Services.csproj">
       <Project>{81a7247f-f729-49b4-ab99-1b0ab09fb56e}</Project>
       <Name>Xprepay.Services</Name>

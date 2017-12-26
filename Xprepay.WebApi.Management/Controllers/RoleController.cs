@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System.Collections.Generic;
+using System.Web.Http;
+using Xprepay.Services.Management.Dtos;
 using Xprepay.Web.Controllers;
 
 namespace Xprepay.WebApi.Management.Controllers
@@ -11,6 +13,12 @@ namespace Xprepay.WebApi.Management.Controllers
         public IHttpActionResult Login()
         {
             return Json("test");
+        }
+        [HttpGet]
+        [Route("get")]
+        public IHttpActionResult Get()
+        {
+            return Json(new List<RoleDto>() { new RoleDto { RoleName="用户管理",No=1,Status=0} });
         }
     }
 }

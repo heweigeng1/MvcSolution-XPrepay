@@ -4,3 +4,7 @@ import request from '../utils/request';
 export async function testone() {
   return request('http://localhost:6832/management/role/login');
 }
+
+export async function getRoles() {
+  return request('http://localhost:6832/management/role/get')
+}
