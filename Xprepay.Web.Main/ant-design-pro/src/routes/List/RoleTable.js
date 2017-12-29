@@ -76,8 +76,10 @@ export default class RoleTable extends PureComponent {
             }
         ];
         const paginationProps = {
+            //显示每页显示多少条数据
             showSizeChanger: true,
-            showQuickJumper: true,
+            //快速跳转到第几页
+            showQuickJumper: false,
             pagination: { total: 1, pageSize: 10, current: 1 },
         };
 
