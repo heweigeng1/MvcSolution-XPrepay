@@ -31,6 +31,7 @@ namespace Xprepay.Web.Main
         protected override void RegisterIoc()
         {
             Ioc.RegisterInheritedTypes(typeof(ServiceBase).Assembly, typeof(ServiceBase));
+            Ioc.RegisterInheritedTypes(typeof(Services.Management.IRoleService).Assembly, typeof(ServiceBase));
         }
         /// <summary>
         /// webapi start session

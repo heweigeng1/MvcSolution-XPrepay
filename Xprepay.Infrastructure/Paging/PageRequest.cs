@@ -4,9 +4,9 @@
     {
         private int _pageSize;
 
-        public int PageIndex { get; set; }
+        public int currentPage { get; set; }
 
-        public int PageSize
+        public int pageSize
         {
             get { return _pageSize ; }
             set
@@ -22,7 +22,7 @@
             }
         }
 
-        public string Sort { get; set; }
+        public string sorter { get; set; }
         public SortDirection SortDirection { get; set; }
     }
 }

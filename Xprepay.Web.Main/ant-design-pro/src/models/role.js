@@ -7,7 +7,10 @@ export default {
     namespace: 'role',
 
     state: {
-        list: [],
+        data: {
+            list: [],
+            pagination: {},
+        },
         loading: true,
     },
     effects: {
@@ -20,9 +23,8 @@ export default {
             })
         },
         *searchRole({ payload }, { call, put }) {
-            console.log(payload)
             //带参数的请求
-            const response = yield call(roleSearch,payload);
+            const response = yield call(roleSearch, payload);
             yield put({
                 type: 'loadList',
                 payload: response,
@@ -31,10 +33,17 @@ export default {
     },
     reducers: {
         loadList(state, { payload }) {
-            console.log(payload)
+            console.log(payload.Value)
             return {
                 ...state,
-                list: payload,
+                data: {
+                    list: payload.Value,
+                    pagination: {
+                        total: payload.TotalCount,
+                        pageSize: payload.PageSize,
+                        current: payload.PageIndex,
+                    }
+                },
                 loading: false,
             }
         }

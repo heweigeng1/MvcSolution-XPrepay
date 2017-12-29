@@ -47,7 +47,7 @@ export default class RoleTable extends PureComponent {
             // });
             dispatch({
                 type: 'role/searchRole',
-                payload:{RoleName:values.RoleName}
+                payload: { RoleName: values.RoleName }
             });
         })
     }
@@ -75,16 +75,17 @@ export default class RoleTable extends PureComponent {
                 ),
             }
         ];
+
+        const { data: { list, pagination },loading } = this.props.role;
+        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
         const paginationProps = {
             //显示每页显示多少条数据
             showSizeChanger: true,
             //快速跳转到第几页
             showQuickJumper: false,
-            pagination: { total: 1, pageSize: 10, current: 1 },
+            ...pagination,
         };
 
-        const { role } = this.props;
-        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
         return (
             //标头
             <PageHeaderLayout title="用户权限">
@@ -109,8 +110,8 @@ export default class RoleTable extends PureComponent {
                         </Form>
                         <Table
                             bordered={true}
-                            loading={role.loading}
-                            dataSource={role.list}
+                            loading={loading}
+                            dataSource={list}
                             pagination={paginationProps}
                             columns={columns}
                         />

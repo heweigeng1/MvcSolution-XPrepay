@@ -39,7 +39,7 @@ export default class TableList extends PureComponent {
       newObj[key] = getValue(filtersArg[key]);
       return newObj;
     }, {});
-
+    console.log(filters);
     const params = {
       currentPage: pagination.current,
       pageSize: pagination.pageSize,
@@ -49,7 +49,6 @@ export default class TableList extends PureComponent {
     if (sorter.field) {
       params.sorter = `${sorter.field}_${sorter.order}`;
     }
-
     dispatch({
       type: 'rule/fetch',
       payload: params,

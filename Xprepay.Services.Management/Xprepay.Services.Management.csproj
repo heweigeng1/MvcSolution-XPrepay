@@ -63,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dtos\RoleDto.cs" />
+    <Compile Include="Implementations\RoleService.cs" />
+    <Compile Include="IRoleService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AutoMapper\" />
-    <Folder Include="Implementations\" />
     <Folder Include="SearchCriterias\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
