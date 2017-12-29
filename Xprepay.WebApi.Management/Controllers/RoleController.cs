@@ -20,5 +20,11 @@ namespace Xprepay.WebApi.Management.Controllers
         {
             return Json(new List<RoleDto>() { new RoleDto { RoleName="用户管理",No=1,Status=0} });
         }
+        [HttpPost]
+        [Route("search")]
+        public IHttpActionResult Search([FromBody]RoleDto role)
+        {
+            return Json(new List<RoleDto>() { new RoleDto { RoleName = "用户管理", No = 1, Status = 0 } });
+        }
     }
 }

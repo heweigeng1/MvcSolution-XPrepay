@@ -8,3 +8,10 @@ export async function testone() {
 export async function getRoles() {
   return request('http://localhost:6832/management/role/get')
 }
+
+export async function roleSearch(payload) {
+  return request('http://localhost:6832/management/role/search', {
+    method: 'POST',
+    body: payload,
+  });
+}
