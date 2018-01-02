@@ -32,6 +32,9 @@ export default class RoleTable extends PureComponent {
             }
         })
     }
+    tableChanger = () => {
+        console.log("this");
+    }
     handleSearch = (e) => {
         e.preventDefault();
         const { dispatch, form } = this.props;
@@ -76,7 +79,7 @@ export default class RoleTable extends PureComponent {
             }
         ];
 
-        const { data: { list, pagination },loading } = this.props.role;
+        const { data: { list, pagination }, loading } = this.props.role;
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
         const paginationProps = {
             //显示每页显示多少条数据
@@ -114,6 +117,7 @@ export default class RoleTable extends PureComponent {
                             dataSource={list}
                             pagination={paginationProps}
                             columns={columns}
+                            onChange={this.tableChanger}
                         />
                     </div>
                 </ Card>
