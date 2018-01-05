@@ -6,6 +6,7 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from './TableList.less';
 const FormItem = Form.Item;
+const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 @connect(state => ({
     role: state.role,
 }))
@@ -13,8 +14,6 @@ const FormItem = Form.Item;
 export default class RoleTable extends PureComponent {
     state = {
         data: [],
-        pageIndex: 1,
-        pageSize: 10,
         selectedRows: [],
         formValues: {}
     }
@@ -32,8 +31,29 @@ export default class RoleTable extends PureComponent {
             }
         })
     }
-    tableChanger = () => {
-        console.log("this");
+    tableChanger = (pagination, filtersArg, sorter) => {
+        const { dispatch } = this.props;
+        //查询选项
+        const { formValues } = this.state;
+        //勾选项
+        const filters = Object.keys(filtersArg).reduce((obj, key) => {
+            const newObj = { ...obj };
+            newObj[key] = getValue(filtersArg[key]);
+            return newObj;
+        }, {});
+        console.log(sorter);
+        dispatch({
+            type: "role/searchRole",
+            payload: {
+                ...formValues,
+                pagination: {
+                    currentPage: pagination.current,
+                    pageSize: pagination.pageSize,
+                    sorter:sorter.field,
+                    sortDirection:sorter.order
+                },
+            }
+        })
     }
     handleSearch = (e) => {
         e.preventDefault();
@@ -42,15 +62,19 @@ export default class RoleTable extends PureComponent {
             if (err) return;
             const values = {
                 ...fieldsValue,
-                updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
+                //updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
             };
 
-            // this.setState({
-            //     formValues: values,
-            // });
+            this.setState({
+                formValues: values,
+            });
             dispatch({
                 type: 'role/searchRole',
-                payload: { RoleName: values.RoleName }
+                payload: {
+                    ...values,
+                    pagination: {}
+
+                }
             });
         })
     }
@@ -62,6 +86,7 @@ export default class RoleTable extends PureComponent {
             },
             {
                 title: '权限名',
+                sorter: true,
                 dataIndex: 'RoleName'
             },
             {

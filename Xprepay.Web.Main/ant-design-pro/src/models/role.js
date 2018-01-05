@@ -24,7 +24,9 @@ export default {
         },
         *searchRole({ payload }, { call, put }) {
             //带参数的请求
+            console.log(payload)
             const response = yield call(roleSearch, payload);
+            console.log(response);
             yield put({
                 type: 'loadList',
                 payload: response,
@@ -33,7 +35,6 @@ export default {
     },
     reducers: {
         loadList(state, { payload }) {
-            console.log(payload.Value)
             return {
                 ...state,
                 data: {

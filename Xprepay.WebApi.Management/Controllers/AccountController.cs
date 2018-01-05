@@ -13,9 +13,12 @@ namespace Xprepay.WebApi.Management.Controllers
     {
         [HttpGet]
         [Route("login")]
-        public IHttpActionResult Login()
+        public StandardJsonResult Login()
         {
-            return Json("test");
+            return base.Try(() =>
+            {
+                new KnownException("LOGERROR");
+            });
         }
     }
 }

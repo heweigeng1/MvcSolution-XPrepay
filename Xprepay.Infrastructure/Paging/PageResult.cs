@@ -48,7 +48,7 @@ namespace Xprepay
 
             this.PageSize = pageSize;
             this.PageIndex = pageIndex;
-            this.Value.AddRange(source.Skip(pageIndex * pageSize).Take(pageSize).ToList());
+            this.Value.AddRange(source.Skip(pageIndex * pageSize- pageSize).Take(pageSize).ToList());
         }
 
         public PageResult(IList<T> source)
@@ -72,7 +72,7 @@ namespace Xprepay
 
             this.PageSize = pageSize;
             this.PageIndex = pageIndex;
-            this.Value.AddRange(source.Skip(pageIndex * pageSize).Take(pageSize));
+            this.Value.AddRange(source.Skip(pageIndex * pageSize-pageSize).Take(pageSize));
         }
     }
 }
@@ -93,7 +93,7 @@ namespace Xprepay
 
         public static PageResult<T> ToPageResult<T>(this IQueryable<T> query, PageRequest request)
         {
-            return new PageResult<T>(query.OrderBy(request.sorter, request.SortDirection), request.currentPage, request.pageSize);
+            return new PageResult<T>(query.OrderBy(request.Sorter, request.SortDirection), request.CurrentPage, request.PageSize);
         }
     }
 }

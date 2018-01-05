@@ -6,15 +6,15 @@ namespace Xprepay
 {
     public static class OrderByExpression
     {
-        public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, string property, SortDirection orderBy)
+        public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, string property, string orderBy)
         {
             switch (orderBy)
             {
-                case SortDirection.None:
+                case "":
                     return query;
-                case SortDirection.Asc:
+                case "ascend":
                     return query.OrderBy(property);
-                case SortDirection.Desc:
+                case "descend":
                     return query.OrderByDescending(property);
             }
             return query;
