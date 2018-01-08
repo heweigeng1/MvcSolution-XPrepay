@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
+﻿using System.Web.Http;
 using Xprepay.Services.Management;
-using Xprepay.Services.Management.Dtos;
 using Xprepay.Services.Management.SearchCriterias;
 using Xprepay.Web.Controllers;
 
@@ -10,12 +8,7 @@ namespace Xprepay.WebApi.Management.Controllers
     [RoutePrefix("management/role")]
     public class RoleController : XprepayApiBase
     {
-        [HttpGet]
-        [Route("login")]
-        public IHttpActionResult Login()
-        {
-            return Json("test");
-        }
+      
         [HttpGet]
         [Route("get")]
         public IHttpActionResult Get()
@@ -28,6 +21,15 @@ namespace Xprepay.WebApi.Management.Controllers
         public IHttpActionResult Search([FromBody]SCRole role)
         {
             return Json(Ioc.Get<IRoleService>().Get(role.Pagination));
+        }
+        [HttpPost]
+        [Route("ylogin")]
+        public StandardJsonResult Login()
+        {
+            return base.Try(() =>
+            {
+                new KnownException("LOGERROR");
+            });
         }
     }
 }

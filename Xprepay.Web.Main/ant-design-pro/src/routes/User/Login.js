@@ -63,7 +63,11 @@ export default class Login extends Component {
       />
     );
   }
-
+  mylogin = () => {
+    this.props.dispatch({
+      type: 'login/ylogin',
+    });
+  }
   render() {
     const { form, login } = this.props;
     const { getFieldDecorator } = form;
@@ -168,6 +172,9 @@ export default class Login extends Component {
             <a className={styles.forgot} href="">忘记密码</a>
             <Button size="large" loading={login.submitting} className={styles.submit} type="primary" htmlType="submit">
               登录
+            </Button>
+            <Button size="large" onClick={this.mylogin} className={styles.submit} type="primary">
+              ylogin
             </Button>
           </FormItem>
         </Form>

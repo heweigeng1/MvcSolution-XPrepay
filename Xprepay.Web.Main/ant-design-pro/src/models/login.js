@@ -1,5 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { fakeAccountLogin } from '../services/api';
+import { xlogin,ylogin } from '../services/testOne';
 
 export default {
   namespace: 'login',
@@ -14,7 +15,9 @@ export default {
         type: 'changeSubmitting',
         payload: true,
       });
-      const response = yield call(fakeAccountLogin, payload);
+      console.log(payload)
+      const response = yield call(xlogin, payload);
+      console.log(response.Success);
       yield put({
         type: 'changeLoginStatus',
         payload: response,
@@ -23,6 +26,10 @@ export default {
       if (response.status === 'ok') {
         yield put(routerRedux.push('/'));
       }
+    },
+    *ylogin(_,{ call, put}){
+      const response = yield call(ylogin);
+      console.log(response);
     },
     *logout(_, { put }) {
       yield put({
