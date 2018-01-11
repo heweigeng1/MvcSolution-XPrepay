@@ -182,6 +182,7 @@
     <Content Include="ant-design-pro\src\models\profile.js" />
     <Content Include="ant-design-pro\src\models\project.js" />
     <Content Include="ant-design-pro\src\models\register.js" />
+    <Content Include="ant-design-pro\src\models\role.js" />
     <Content Include="ant-design-pro\src\models\rule.js" />
     <Content Include="ant-design-pro\src\models\user.js" />
     <Content Include="ant-design-pro\src\rollbar.js" />

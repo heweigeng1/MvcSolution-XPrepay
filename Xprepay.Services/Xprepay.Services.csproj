@@ -72,6 +72,7 @@
     <Compile Include="Dtos\ImageDataDto.cs" />
     <Compile Include="Dtos\SessionAgriculture.cs" />
     <Compile Include="Dtos\SessionUser.cs" />
+    <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="IAgricultureService.cs" />
     <Compile Include="IAreaService.cs" />
     <Compile Include="IImageService.cs" />

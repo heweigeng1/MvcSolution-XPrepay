@@ -23,7 +23,7 @@ export async function xlogin(payload) {
   });
 }
 export async function ylogin() {
-  return request('http://localhost:6832/api/account/login', {
-    method: 'GET',
+  return request('http://localhost:6832/management/role/ylogin', {
+    method: 'POST',
   });
 }

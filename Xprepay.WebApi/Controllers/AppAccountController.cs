@@ -15,7 +15,7 @@ namespace Xprepay.WebApi.Controllers
         [Route("login")]
         public IHttpActionResult Login()
         {
-          throw  new KnownException("test");
+            throw new KnownException("test");
             return Json("test");
         }
     }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Xprepay.Web.Controllers;
 using System.Web.Http;
 using Xprepay.WebApi.Management.ViewModels;
+using System.Web;
+using Xprepay.Services;
+using Xprepay.Web.Security;
 
 namespace Xprepay.WebApi.Management.Controllers
 {
@@ -18,7 +21,11 @@ namespace Xprepay.WebApi.Management.Controllers
         {
             return base.Try(() =>
             {
-               //throw new Exception("test");
+                //throw  new Exception("测试");
+                var service = Ioc.Get<IUserService>();
+                service.Login(model.UserName, model.PassWord, "");
+                var user = service.Get(model.UserName);
+                base.LoginUser(user.Id);
             });
         }
     }

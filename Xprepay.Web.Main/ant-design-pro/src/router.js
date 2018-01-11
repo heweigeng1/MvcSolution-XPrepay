@@ -41,7 +41,6 @@ function RouterConfig({ history, app }) {
   const navData = getNavData(app);
   const UserLayout = getLayout(navData, 'UserLayout').component;
   const BasicLayout = getLayout(navData, 'BasicLayout').component;
-
   const passProps = {
     app,
     navData,
@@ -49,7 +48,7 @@ function RouterConfig({ history, app }) {
       return getRouteData(navData, path);
     },
   };
-
+  console.log(getNavData);
   return (
     <LocaleProvider locale={zhCN}>
       <Router history={history}>

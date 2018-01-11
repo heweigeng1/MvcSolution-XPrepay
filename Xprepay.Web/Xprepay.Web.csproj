@@ -81,6 +81,7 @@
     <Compile Include="ModelBinders\Base64ImageBinder.cs" />
     <Compile Include="MvcApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\ApiAuthorizeAttribute.cs" />
     <Compile Include="Security\MvcAuthorizeAttribute.cs" />
     <Compile Include="Security\MvcRoleProvider.cs" />
     <Compile Include="Security\MvcSession.cs" />

@@ -1,4 +1,5 @@
 import { routerRedux } from 'dva/router';
+import { checkResponse } from '../utils/errRedirect';
 //获取接口
 import { getRoles, roleSearch } from '../services/testOne';
 import Search from '../../node_modules/.3.0.2@antd/lib/transfer/search';
@@ -15,8 +16,9 @@ export default {
     },
     effects: {
         *getRoles({ payload }, { call, put }) {
-            const response = yield call(getRoles);
-            console.log(response);
+            const response = yield call(getRoles, { put });
+            //是否正确返回数据.根据错误code 跳转页面
+            yield call(checkResponse, { response, put });
             yield put({
                 type: 'loadList',
                 payload: response,
@@ -24,9 +26,9 @@ export default {
         },
         *searchRole({ payload }, { call, put }) {
             //带参数的请求
-            console.log(payload)
-            const response = yield call(roleSearch, payload);
-            console.log(response);
+            const response = yield call(roleSearch, { payload, put, call });
+            //是否正确返回数据.根据错误code 跳转页面
+            yield call(checkResponse, { response, put });
             yield put({
                 type: 'loadList',
                 payload: response,
