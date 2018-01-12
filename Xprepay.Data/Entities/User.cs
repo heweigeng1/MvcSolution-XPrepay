@@ -14,7 +14,8 @@ namespace Xprepay.Data
         /// </summary>
         public string PhoneNum { get; set; }
         public string ImageKey { get; set; }
-        public int Age { get; set; }
+        public string Email { get; set; }
+        public DateTime? Birthday { get; set; }
         /// <summary>
         /// 用户类型,管理员,普通用户
         /// </summary>
@@ -44,7 +45,7 @@ namespace Xprepay.Data
         {
             this.NickName = user.NickName;
             this.Signature = user.Signature;
-            this.Age = user.Age;
+            this.Birthday = user.Birthday;
             this.Gender = user.Gender;
             this.ImageKey = user.ImageKey;
         }

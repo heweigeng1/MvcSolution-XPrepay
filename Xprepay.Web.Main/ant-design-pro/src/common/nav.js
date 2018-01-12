@@ -170,6 +170,19 @@ export const getNavData = app => [
           },
         ],
       },
+      {
+        name: '帐户',
+        icon: 'user',
+        path: 'user-info',
+        children: [
+          {
+            name: '用户列表',
+            layout:'BasicLayout',
+            path: 'user-list',
+            component: dynamicWrapper(app, ['user'], () => import('../routes/User/UserList')),
+          },
+        ]
+      }
     ],
   },
   {

@@ -23,7 +23,7 @@ namespace Xprepay.Data
                 Id=Guid.NewGuid(),
                 CreatedTime=DateTime.Now,
                 NickName = "超级管理员",
-                Age = 25,
+                Birthday = DateTime.Now.AddYears(-24),
                 UserType=(int)EnumUserType.后台管理员,
                 Gender = Gender.Male,
                 Password = CryptoService.Md5HashEncrypt("123456"),

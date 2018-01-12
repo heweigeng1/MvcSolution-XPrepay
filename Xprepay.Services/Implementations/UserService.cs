@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web;
 using Xprepay.Data;
 using Xprepay.Data.Enums;
+using Xprepay.Services.Dtos;
+using Xprepay.Services.SearchCriterias;
 
 namespace Xprepay.Services
 {
@@ -187,6 +189,31 @@ namespace Xprepay.Services
                     }
                 }
                 return db.SaveChanges() > 0;
+            }
+        }
+
+        public PageResult<UserDto> PageSearch(SCUser model)
+        {
+            using (var db=base.NewDB())
+            {
+                var data = db.Users.Where(c=>c.UserType==model.UserType);
+                if (!string.IsNullOrEmpty(model.PhoneNum))
+                {
+                    data = data.Where(c => c.PhoneNum.Contains(model.PhoneNum));
+                }
+                if (!string.IsNullOrEmpty(model.UserName))
+                {
+                    data = data.Where(c => c.UserName.Contains(model.UserName));
+                }
+                if (model.StrTime!=null)
+                {
+                    data = data.Where(c => c.CreatedTime >= model.StrTime);
+                }
+                if (model.EndTime!=null)
+                {
+                    data = data.Where(c => c.CreatedTime <= model.EndTime);
+                }
+                return data.ToDtos().ToPageResult(model.Pagination.CurrentPage, model.Pagination.PageSize);
             }
         }
     }

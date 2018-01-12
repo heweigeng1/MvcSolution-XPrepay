@@ -18,18 +18,11 @@ export default class RoleTable extends PureComponent {
         formValues: {}
     }
     componentDidMount() {
+        console.log(styles)
         const { dispatch } = this.props;
         dispatch({
             type: 'role/getRoles',
         });
-    }
-    getRole = () => {
-        this.props.dispatch({
-            type: 'role/getRoles',
-            payload: {
-                list: this.state.data
-            }
-        })
     }
     tableChanger = (pagination, filtersArg, sorter) => {
         const { dispatch } = this.props;
@@ -73,7 +66,6 @@ export default class RoleTable extends PureComponent {
                 payload: {
                     ...values,
                     pagination: {}
-
                 }
             });
         })

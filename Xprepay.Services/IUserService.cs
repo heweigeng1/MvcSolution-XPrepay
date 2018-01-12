@@ -1,5 +1,7 @@
 ﻿using System;
 using Xprepay.Data;
+using Xprepay.Services.Dtos;
+using Xprepay.Services.SearchCriterias;
 
 namespace Xprepay.Services
 {
@@ -15,5 +17,6 @@ namespace Xprepay.Services
         bool ChangePassword(User user);
         bool Delflag(Guid id);
         void CompleteRegistration(Guid userId, User user);
+        PageResult<UserDto> PageSearch(SCUser model);
     }
 }

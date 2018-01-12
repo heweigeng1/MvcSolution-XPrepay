@@ -1,6 +1,8 @@
 ﻿using System.Web.Http;
+using Xprepay.Services;
+using Xprepay.Services.Dtos;
+using Xprepay.Services.SearchCriterias;
 using Xprepay.Web.Controllers;
-using Xprepay.WebApi.Management.ViewModels;
 
 namespace Xprepay.WebApi.Management.Controllers
 {
@@ -16,13 +18,14 @@ namespace Xprepay.WebApi.Management.Controllers
             });
         }
         [HttpPost]
-        [Route("login")]
-        public StandardJsonResult Login([FromBody]LoginModel model)
+        [Route("search")]
+        public StandardJsonResult<PageResult<UserDto>> Search([FromBody]SCUser model)
         {
-            return base.Try(() =>
+            var result =new StandardJsonResult<PageResult<UserDto>>();
+            return base.Try<PageResult<UserDto>>(() =>
             {
-                new KnownException("LOGERROR");
-            });
+                result.Value = Ioc.Get<IUserService>().PageSearch(model);
+            }, result);
         }
     }
 }
