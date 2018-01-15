@@ -15,6 +15,7 @@ namespace Xprepay.Services.Dtos
         public string UserName { get; set; }
         public string NickName { get; set; }
         public string PhoneNum { get; set; }
+        public string Email { get; set; }
         public int UserType { get; set; }
         public string UserTypeText
         {
@@ -41,7 +42,8 @@ namespace Xprepay
                        LastUpdatedTime=item.LastUpdatedTime,
                        NickName=item.NickName,
                        PhoneNum=item.PhoneNum,
-                       UserName=item.UserName
+                       UserName=item.UserName,
+                       Email=item.Email
                    };
         }
         public static UserDto ToDto(this User model)

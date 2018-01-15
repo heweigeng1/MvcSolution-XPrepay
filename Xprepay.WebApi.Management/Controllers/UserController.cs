@@ -17,6 +17,16 @@ namespace Xprepay.WebApi.Management.Controllers
                 new KnownException("LOGERROR");
             });
         }
+        [HttpGet]
+        [Route("index")]
+        public StandardJsonResult<PageResult<UserDto>> Index()
+        {
+            var result = new StandardJsonResult<PageResult<UserDto>>();
+            return base.Try<PageResult<UserDto>>(() =>
+            {
+                result.Value = Ioc.Get<IUserService>().PageSearch(new SCUser());
+            }, result);
+        }
         [HttpPost]
         [Route("search")]
         public StandardJsonResult<PageResult<UserDto>> Search([FromBody]SCUser model)

@@ -6,15 +6,15 @@ namespace Xprepay.Services.SearchCriterias
 {
     public class SCUser:PageInput
     {
-        [Display(Name = "userName")]
+        //[Display(Name = "userName")]
         public string UserName { get; set; }
-        [Display(Name = "phoneNum")]
+        //[Display(Name = "phoneNum")]
         public string PhoneNum { get; set; }
-        [Display(Name = "userType")]
+        //[Display(Name = "userType")]
         public int UserType { get; set; }
-        [Display(Name = "strTime")]
+        //[Display(Name = "strTime")]
         public DateTime? StrTime { get; set; }
-        [Display(Name = "endTime")]
+        //[Display(Name = "endTime")]
         public DateTime? EndTime { get; set; }
 
     }

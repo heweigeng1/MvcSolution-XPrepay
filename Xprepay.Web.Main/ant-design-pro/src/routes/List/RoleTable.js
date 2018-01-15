@@ -18,7 +18,6 @@ export default class RoleTable extends PureComponent {
         formValues: {}
     }
     componentDidMount() {
-        console.log(styles)
         const { dispatch } = this.props;
         dispatch({
             type: 'role/getRoles',

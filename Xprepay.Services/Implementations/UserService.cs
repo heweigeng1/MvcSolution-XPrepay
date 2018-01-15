@@ -196,7 +196,7 @@ namespace Xprepay.Services
         {
             using (var db=base.NewDB())
             {
-                var data = db.Users.Where(c=>c.UserType==model.UserType);
+                var data = db.Users.AsQueryable();
                 if (!string.IsNullOrEmpty(model.PhoneNum))
                 {
                     data = data.Where(c => c.PhoneNum.Contains(model.PhoneNum));
@@ -213,7 +213,7 @@ namespace Xprepay.Services
                 {
                     data = data.Where(c => c.CreatedTime <= model.EndTime);
                 }
-                return data.ToDtos().ToPageResult(model.Pagination.CurrentPage, model.Pagination.PageSize);
+                return data.ToDtos().ToPageResult(model.Pagination);
             }
         }
     }

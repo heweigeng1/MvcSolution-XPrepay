@@ -48,7 +48,7 @@ namespace Xprepay
 
             this.PageSize = pageSize;
             this.PageIndex = pageIndex;
-            this.Value.AddRange(source.Skip(pageIndex * pageSize- pageSize).Take(pageSize).ToList());
+            this.Value.AddRange(source.Skip((pageIndex-1) * pageSize).Take(pageSize).ToList());
         }
 
         public PageResult(IList<T> source)

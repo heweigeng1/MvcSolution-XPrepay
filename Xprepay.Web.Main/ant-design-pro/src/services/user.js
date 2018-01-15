@@ -9,8 +9,14 @@ export async function queryCurrent() {
 }
 
 export async function search(params) {
+  console.log(params);
   return request('http://localhost:6832/management/user/search', {
     method: 'Post',
     body: params,
+  })
+}
+export async function index() {
+  return request('http://localhost:6832/management/user/index', {
+    method: 'GET',
   })
 }

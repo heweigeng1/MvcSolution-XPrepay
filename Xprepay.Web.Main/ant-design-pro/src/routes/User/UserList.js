@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'dva';
-import { Table, Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message } from 'antd';
+import moment from "moment";
+import { Popconfirm, Table, Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, Divider } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 
 import styles from '../List/TableList.less';
@@ -13,6 +14,7 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 }))
 @Form.create()
 
+
 export default class UserList extends PureComponent {
 
     state = {
@@ -22,12 +24,12 @@ export default class UserList extends PureComponent {
     }
     //初始化时加载表格数据.
     componentDidMount() {
-        console.log(styles)
-        // const { dispatch } = this.props;
-        // dispatch({
-        //     type: 'user/search',
-        // })
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'user/index',
+        })
     }
+
     //搜索按钮
     search = (e) => {
         const { dispatch, form } = this.props;
@@ -49,8 +51,10 @@ export default class UserList extends PureComponent {
             })
         })
     }
+    reset = (e) => {
+        console.log(e);
+    }
     render() {
-        console.log(styles)
         const { data: { list, pagination }, loading } = this.props.user;
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
         const paginationProps = {
@@ -60,67 +64,69 @@ export default class UserList extends PureComponent {
             showQuickJumper: false,
             ...pagination,
         };
+        
         const columns = [
             {
-                title: '手机号码',
-                dataIndex: 'PhoneNum'
+                title: '帐号',
+                dataIndex: 'UserName'
             },
             {
                 title: '昵称',
                 dataIndex: 'NickName'
             },
             {
-                title: '邮箱',
-                dataIndex: 'Email'
-            },
-            {
-                title: '生日',
-                dataindex: 'Birthday'
+                title: '用户类型',
+                dataIndex: 'UserTypeText'
             },
             {
                 title: '注册时间',
-                dataindex: 'CreatedTime'
+                dataIndex: 'CreatedTime',
+                render: val => <span>{moment(val).format('YYYY/MM/DD')}</span>
             },
             {
                 title: '操作',
-                render: () => (
-                    <div>
-
-                    </div>
+                dataIndex: 'action',
+                render: (text, record) => (
+                    <span>
+                        <a >abc</a>
+                        <Divider type="vertical" />
+                        <Popconfirm title="确定重置密码?" okText="Yes" onConfirm={this.reset} cancelText="No">
+                            <a >重置密码</a>
+                        </Popconfirm>
+                    </span>
                 )
             }
-
         ];
         return (
             //标头
             <PageHeaderLayout title="用户列表">
                 {/* 包裹table的白底块 */}
                 <Card bordered={false}>
-                    {/* <div className={styles.tableList}> */}
-                    <Form onSubmit={this.search} >
-                        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
-                            <Col md={6} sm={6}>
-                                <FormItem>
-                                    {getFieldDecorator('UserName')(
-                                        <Input placeholder="UserName" />
-                                    )}
-                                </FormItem>
-                            </Col>
-                            <Col md={6} sm={6}>
-                                <FormItem>
-                                    <Button type="primary" htmlType="submit">查询</Button>
-                                </FormItem>
-                            </Col>
-                        </Row>
-                    </Form>
-                    <Table
-                        bordered={true}
-                        loading={loading}
-                        dataSource={list}
-                        pagination={paginationProps}
-                        columns={columns}
-                    />
-                    {/* </div> */}
+                    <div className={styles.tableList}>
+                        <Form onSubmit={this.search} >
+                            <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+                                <Col md={6} sm={6}>
+                                    <FormItem>
+                                        {getFieldDecorator('PhoneNum')(
+                                            <Input placeholder="PhoneNum" />
+                                        )}
+                                    </FormItem>
+                                </Col>
+                                <Col md={6} sm={6}>
+                                    <FormItem>
+                                        <Button type="primary" htmlType="submit">查询</Button>
+                                    </FormItem>
+                                </Col>
+                            </Row>
+                        </Form>
+                        <Table
+                            bordered={true}
+                            loading={loading}
+                            dataSource={list}
+                            pagination={paginationProps}
+                            columns={columns}
+                        />
+                    </div>
                 </ Card>
             </ PageHeaderLayout>
         )

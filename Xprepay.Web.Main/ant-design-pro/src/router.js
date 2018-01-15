@@ -48,7 +48,6 @@ function RouterConfig({ history, app }) {
       return getRouteData(navData, path);
     },
   };
-  console.log(getNavData);
   return (
     <LocaleProvider locale={zhCN}>
       <Router history={history}>
