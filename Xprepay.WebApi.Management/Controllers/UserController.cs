@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using Xprepay.Data;
 using Xprepay.Services;
 using Xprepay.Services.Dtos;
 using Xprepay.Services.SearchCriterias;
@@ -45,6 +46,15 @@ namespace Xprepay.WebApi.Management.Controllers
             return base.Try(() =>
             {
                 Ioc.Get<IUserService>().ResetPassword(id);
+            });
+        }
+        [HttpPost]
+        [Route("add")]
+        public StandardJsonResult Add([FromBody]User user)
+        {
+            return base.Try(() =>
+            {
+                Ioc.Get<IUserService>().Add(user);
             });
         }
     }

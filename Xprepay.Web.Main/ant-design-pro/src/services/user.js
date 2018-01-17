@@ -14,6 +14,13 @@ export async function userSearch(payload) {
     body: payload,
   })
 }
+export async function add(payload) {
+  return request('http://localhost:6832/management/user/add', {
+    method: 'POST',
+    body: payload,
+  })
+}
+
 export async function index() {
   return request('http://localhost:6832/management/user/index', {
     method: 'GET',

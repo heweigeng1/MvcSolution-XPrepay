@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import moment from "moment";
 import { Popconfirm, Table, Row, Col, Card, Form, Input, Select, Icon, Button, Dropdown, Menu, InputNumber, DatePicker, Modal, message, Divider } from 'antd';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-
+import UserModal from './UserModal';
 import styles from '../List/TableList.less';
 
 const FormItem = Form.Item;
@@ -20,7 +20,8 @@ export default class UserList extends PureComponent {
     state = {
         data: [],
         selectedRows: [],
-        formValues: {}
+        formValues: {},
+        modalVisible:false,
     }
     //初始化时加载表格数据.
     componentDidMount() {
@@ -76,14 +77,25 @@ export default class UserList extends PureComponent {
     // 事件 传参方法
     resetPassword = (record, event) => {
         console.log(record)
-        const {dispatch}=this.props;
+        const { dispatch } = this.props;
         dispatch({
-            type:'user/resetPassword',
-            payload:record.Id
+            type: 'user/resetPassword',
+            payload: record.Id
         })
     }
     deleteUser = (record, event) => {
         console.log(record);
+    }
+    showModal=()=>{
+        this.setState({
+            modalVisible:true
+        })
+        console.log(this.state.modalVisible)
+    }
+    hideModal=()=>{
+        this.setState({
+            modalVisible:false
+        })
     }
     render() {
         const { data: { list, pagination }, loading } = this.props.user;
@@ -152,6 +164,7 @@ export default class UserList extends PureComponent {
                                 </Col>
                             </Row>
                         </Form>
+                        <Button icon="plus" type="primary" onClick={()=>this.showModal()}>新建</Button>
                         <Table
                             bordered={true}
                             loading={loading}
@@ -162,6 +175,7 @@ export default class UserList extends PureComponent {
                         />
                     </div>
                 </ Card>
+                <UserModal modalVisible={this.state.modalVisible} onCancel={this.hideModal}/>
             </ PageHeaderLayout>
         )
     }

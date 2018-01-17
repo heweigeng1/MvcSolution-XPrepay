@@ -1,5 +1,5 @@
 import { query as queryUsers, queryCurrent, userSearch, index, resetPassword } from '../services/user';
-import { checkResponse, message } from '../utils/errRedirect'
+import { checkResponse, messagePut } from '../utils/errRedirect'
 export default {
   namespace: 'user',
 
@@ -55,9 +55,12 @@ export default {
       })
     },
     *resetPassword({ payload }, { call, put }) {
-      const response = yield call(resetPassword);
+      const response = yield call(resetPassword, payload);
       yield call(checkResponse, { response, put });
       yield call(messagePut, { response, put });
+    },
+    *add({ payload }, { call, put }) {
+      const response = yield call(add, payload);
     }
   },
 
