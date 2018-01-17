@@ -29,7 +29,29 @@ export default class UserList extends PureComponent {
             type: 'user/index',
         })
     }
-
+    tableChanger = (pagination, filtersArg, sorter) => {
+        const { dispatch } = this.props;
+        //查询选项
+        const { formValues } = this.state;
+        //勾选项
+        const filters = Object.keys(filtersArg).reduce((obj, key) => {
+            const newObj = { ...obj };
+            newObj[key] = getValue(filtersArg[key]);
+            return newObj;
+        }, {});
+        dispatch({
+            type: "user/userSearch",
+            payload: {
+                ...formValues,
+                pagination: {
+                    currentPage: pagination.current,
+                    pageSize: pagination.pageSize,
+                    sorter: sorter.field,
+                    sortDirection: sorter.order
+                },
+            }
+        })
+    }
     //搜索按钮
     search = (e) => {
         const { dispatch, form } = this.props;
@@ -43,7 +65,7 @@ export default class UserList extends PureComponent {
                 formValues: values,
             });
             dispatch({
-                type: 'user/search',
+                type: 'user/userSearch',
                 payload: {
                     ...values,
                     pagination: {}
@@ -51,8 +73,17 @@ export default class UserList extends PureComponent {
             })
         })
     }
-    reset = (e) => {
-        console.log(e);
+    // 事件 传参方法
+    resetPassword = (record, event) => {
+        console.log(record)
+        const {dispatch}=this.props;
+        dispatch({
+            type:'user/resetPassword',
+            payload:record.Id
+        })
+    }
+    deleteUser = (record, event) => {
+        console.log(record);
     }
     render() {
         const { data: { list, pagination }, loading } = this.props.user;
@@ -64,7 +95,7 @@ export default class UserList extends PureComponent {
             showQuickJumper: false,
             ...pagination,
         };
-        
+
         const columns = [
             {
                 title: '帐号',
@@ -88,9 +119,11 @@ export default class UserList extends PureComponent {
                 dataIndex: 'action',
                 render: (text, record) => (
                     <span>
-                        <a >abc</a>
+                        <Popconfirm title="确定删除?" okText="Yes" onConfirm={this.deleteUser.bind(this, record)} cancelText="No">
+                            <a >删除</a>
+                        </Popconfirm>
                         <Divider type="vertical" />
-                        <Popconfirm title="确定重置密码?" okText="Yes" onConfirm={this.reset} cancelText="No">
+                        <Popconfirm title="确定重置密码?" okText="Yes" onConfirm={this.resetPassword.bind(this, record)} cancelText="No">
                             <a >重置密码</a>
                         </Popconfirm>
                     </span>
@@ -107,8 +140,8 @@ export default class UserList extends PureComponent {
                             <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
                                 <Col md={6} sm={6}>
                                     <FormItem>
-                                        {getFieldDecorator('PhoneNum')(
-                                            <Input placeholder="PhoneNum" />
+                                        {getFieldDecorator('phoneNum')(
+                                            <Input placeholder="手机号" />
                                         )}
                                     </FormItem>
                                 </Col>
@@ -125,6 +158,7 @@ export default class UserList extends PureComponent {
                             dataSource={list}
                             pagination={paginationProps}
                             columns={columns}
+                            onChange={this.tableChanger}
                         />
                     </div>
                 </ Card>

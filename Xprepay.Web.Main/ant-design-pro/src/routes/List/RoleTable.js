@@ -33,7 +33,6 @@ export default class RoleTable extends PureComponent {
             newObj[key] = getValue(filtersArg[key]);
             return newObj;
         }, {});
-        console.log(sorter);
         dispatch({
             type: "role/searchRole",
             payload: {

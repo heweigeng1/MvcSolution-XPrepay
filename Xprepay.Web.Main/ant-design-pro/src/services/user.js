@@ -8,15 +8,20 @@ export async function queryCurrent() {
   return request('/api/currentUser');
 }
 
-export async function search(params) {
-  console.log(params);
+export async function userSearch(payload) {
   return request('http://localhost:6832/management/user/search', {
-    method: 'Post',
-    body: params,
+    method: 'POST',
+    body: payload,
   })
 }
 export async function index() {
   return request('http://localhost:6832/management/user/index', {
+    method: 'GET',
+  })
+}
+
+export async function resetPassword(payload) {
+  return request('http://localhost:6832/management/user/resetPassword?id='+payload, {
     method: 'GET',
   })
 }

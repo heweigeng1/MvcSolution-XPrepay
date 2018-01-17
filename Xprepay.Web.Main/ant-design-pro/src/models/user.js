@@ -1,5 +1,5 @@
-import { query as queryUsers, queryCurrent, search, index } from '../services/user';
-import { checkResponse } from '../utils/errRedirect'
+import { query as queryUsers, queryCurrent, userSearch, index, resetPassword } from '../services/user';
+import { checkResponse, message } from '../utils/errRedirect'
 export default {
   namespace: 'user',
 
@@ -44,15 +44,20 @@ export default {
         payload: response.Value,
       })
     },
-    *search(payload, { call, put }) {
-      const response = yield call(search, payload);
+    *userSearch({ payload }, { call, put }) {
+      const response = yield call(userSearch, payload);
 
       //是否正确返回数据.根据错误code 跳转页面
       yield call(checkResponse, { response, put });
       yield put({
         type: 'loadList',
-        payload: response,
+        payload: response.Value,
       })
+    },
+    *resetPassword({ payload }, { call, put }) {
+      const response = yield call(resetPassword);
+      yield call(checkResponse, { response, put });
+      yield call(messagePut, { response, put });
     }
   },
 
@@ -85,7 +90,6 @@ export default {
       };
     },
     loadList(state, { payload }) {
-      console.log( payload.Value)
       return {
         ...state,
         data: {

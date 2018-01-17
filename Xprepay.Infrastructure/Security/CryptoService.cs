@@ -29,7 +29,11 @@ namespace Xprepay
             var decrypted = des.CreateDecryptor().TransformFinalBlock(encodedBytes, 0, encodedBytes.Length);
             return Encoding.Default.GetString(decrypted);
         }
-
+        /// <summary>
+        /// 密码MD5加密
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string Md5HashEncrypt(string input)
         {
             var md5 = new MD5CryptoServiceProvider();

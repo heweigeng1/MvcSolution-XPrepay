@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using Xprepay.Services;
 using Xprepay.Services.Dtos;
 using Xprepay.Services.SearchCriterias;
@@ -36,6 +37,15 @@ namespace Xprepay.WebApi.Management.Controllers
             {
                 result.Value = Ioc.Get<IUserService>().PageSearch(model);
             }, result);
+        }
+        [HttpGet]
+        [Route("resetPassword")]
+        public StandardJsonResult ResetPassword(Guid id)
+        {
+            return base.Try(() =>
+            {
+                Ioc.Get<IUserService>().ResetPassword(id);
+            });
         }
     }
 }

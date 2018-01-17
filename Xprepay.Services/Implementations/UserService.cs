@@ -191,7 +191,6 @@ namespace Xprepay.Services
                 return db.SaveChanges() > 0;
             }
         }
-
         public PageResult<UserDto> PageSearch(SCUser model)
         {
             using (var db=base.NewDB())
@@ -205,15 +204,33 @@ namespace Xprepay.Services
                 {
                     data = data.Where(c => c.UserName.Contains(model.UserName));
                 }
-                if (model.StrTime!=null)
+                if (model.StrTime != null)
                 {
                     data = data.Where(c => c.CreatedTime >= model.StrTime);
                 }
-                if (model.EndTime!=null)
+                if (model.EndTime != null)
                 {
                     data = data.Where(c => c.CreatedTime <= model.EndTime);
                 }
                 return data.ToDtos().ToPageResult(model.Pagination);
+            }
+        }
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        /// <param name="id"></param>
+        public void ResetPassword(Guid id)
+        {
+            using (var db=base.NewDB())
+            {
+                var user = db.Users.FirstOrDefault(c => c.Id == id);
+                if (user==null)
+                {
+                    throw new KnownException("帐号不存在");
+                }
+                user.LastUpdatedTime = DateTime.Now;
+                user.Password = CryptoService.Md5HashEncrypt("123456");
+                db.SaveChanges();
             }
         }
     }

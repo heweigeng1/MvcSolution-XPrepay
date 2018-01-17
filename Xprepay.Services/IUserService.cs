@@ -18,5 +18,6 @@ namespace Xprepay.Services
         bool Delflag(Guid id);
         void CompleteRegistration(Guid userId, User user);
         PageResult<UserDto> PageSearch(SCUser model);
+        void ResetPassword(Guid id);
     }
 }

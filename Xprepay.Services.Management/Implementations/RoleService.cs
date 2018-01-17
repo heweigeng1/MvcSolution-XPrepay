@@ -12,7 +12,7 @@ namespace Xprepay.Services.Management.Implementations
         public PageResult<RoleDto> Get(PageRequest result)
         {
             List<RoleDto> dto = new List<RoleDto>();
-            for (int i = 0; i < 24; i++)
+            for (int i = 0; i < 2; i++)
             {
                 dto.Add(new RoleDto { RoleName = $"用户管理{i}", No = i, Status = 0 });
             }
