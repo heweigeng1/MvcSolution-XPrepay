@@ -18,10 +18,8 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 export default class UserList extends PureComponent {
 
     state = {
-        data: [],
         selectedRows: [],
         formValues: {},
-        modalVisible:false,
     }
     //初始化时加载表格数据.
     componentDidMount() {
@@ -86,19 +84,15 @@ export default class UserList extends PureComponent {
     deleteUser = (record, event) => {
         console.log(record);
     }
-    showModal=()=>{
-        this.setState({
-            modalVisible:true
-        })
-        console.log(this.state.modalVisible)
-    }
-    hideModal=()=>{
-        this.setState({
-            modalVisible:false
+    //显示隐藏模态框
+    changeVisible = () => {
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'user/changeModalVisible'
         })
     }
     render() {
-        const { data: { list, pagination }, loading } = this.props.user;
+        const { data: { list, pagination }, loading, modalVisible } = this.props.user;
         const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
         const paginationProps = {
             //显示每页显示多少条数据
@@ -164,7 +158,7 @@ export default class UserList extends PureComponent {
                                 </Col>
                             </Row>
                         </Form>
-                        <Button icon="plus" type="primary" onClick={()=>this.showModal()}>新建</Button>
+                        <Button icon="plus" type="primary" onClick={() => this.changeVisible()}>新建</Button>
                         <Table
                             bordered={true}
                             loading={loading}
@@ -175,7 +169,7 @@ export default class UserList extends PureComponent {
                         />
                     </div>
                 </ Card>
-                <UserModal modalVisible={this.state.modalVisible} onCancel={this.hideModal}/>
+                <UserModal onCancel={this.changeVisible} />
             </ PageHeaderLayout>
         )
     }

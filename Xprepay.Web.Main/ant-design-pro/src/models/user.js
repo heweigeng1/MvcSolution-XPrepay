@@ -10,6 +10,8 @@ export default {
     },
     loading: false,
     currentUser: {},
+    modalVisible: false,
+    modalData: {}
   },
 
   effects: {
@@ -54,14 +56,17 @@ export default {
         payload: response.Value,
       })
     },
+    
+    *changeModalVisible(_, { call, put }) {
+      yield put({
+        type:'changeVisible',
+      })
+    },
     *resetPassword({ payload }, { call, put }) {
       const response = yield call(resetPassword, payload);
       yield call(checkResponse, { response, put });
       yield call(messagePut, { response, put });
     },
-    *add({ payload }, { call, put }) {
-      const response = yield call(add, payload);
-    }
   },
 
   reducers: {
@@ -91,6 +96,12 @@ export default {
           notifyCount: action.payload,
         },
       };
+    },
+    changeVisible(state,action) {
+      return {
+        ...state,
+        modalVisible:!state.modalVisible,
+      }
     },
     loadList(state, { payload }) {
       return {
