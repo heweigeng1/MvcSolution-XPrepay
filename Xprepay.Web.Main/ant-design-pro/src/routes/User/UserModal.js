@@ -7,34 +7,31 @@ const FormItem = Form.Item;
 }))
 export default class UserModal extends PureComponent {
     state = {
-        
+
     };
-    isok = () => {
-        
-    }
-    handleModalVisible = (flag) => {
-        
+    isOk = () => {
+        console.log(this.props.user);
     }
     changeInput = (e) => {
-        // const { data: { nickName, phoneNum } } = this.state;
+        // const { data: { NickName, PhoneNum } } = this.state;
         // const { value } = e.target;
         // console.log(e.target)
         // this.setState({
         //     data: {
-        //         nickName: e.target.name === 'nickName' ? value : nickName,
-        //         phoneNum: e.target.name === 'phoneNum' ? value : phoneNum,
+        //         NickName: e.target.name === 'NickName' ? value : NickName,
+        //         PhoneNum: e.target.name === 'PhoneNum' ? value : PhoneNum,
         //     },
         // })
         // console.log(this.state.data)
     }
     render() {
         const { onCancel } = this.props;
-        const { modalData,modalVisible } = this.props.user;
+        const { modal: { title, data }, modalVisible } = this.props.user;
         return (
             <Modal
-                title="用户"
+                title={title}
                 visible={modalVisible}
-                onOk={this.isok}
+                onOk={this.isOk}
                 onCancel={onCancel}
                 destroyOnClose={true}
             >
@@ -43,14 +40,14 @@ export default class UserModal extends PureComponent {
                     wrapperCol={{ span: 15 }}
                     label="手机号"
                 >
-                    <Input placeholder='6-12个字符' name='phoneNum' onChange={this.changeInput} value={modalData.phoneNum}></Input>
+                    <Input placeholder='6-12个字符' name='PhoneNum' onChange={this.changeInput} value={data.PhoneNum}></Input>
                 </FormItem>
                 <FormItem
                     labelCol={{ span: 5 }}
                     wrapperCol={{ span: 15 }}
                     label="昵 称"
                 >
-                    <Input placeholder='6-12个字符' name='nickName' onChange={this.changeInput} value={modalData.nickName}></Input>
+                    <Input placeholder='6-12个字符' name='NickName' onChange={this.changeInput} value={data.NickName}></Input>
                 </FormItem>
             </Modal>
         )

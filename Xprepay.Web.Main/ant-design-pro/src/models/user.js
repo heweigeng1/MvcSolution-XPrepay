@@ -11,7 +11,10 @@ export default {
     loading: false,
     currentUser: {},
     modalVisible: false,
-    modalData: {}
+    modal: {
+      title:"",
+      data:{}
+    }
   },
 
   effects: {
@@ -56,10 +59,20 @@ export default {
         payload: response.Value,
       })
     },
-    
-    *changeModalVisible(_, { call, put }) {
+    *changeModalVisible({ payload }, { call, put }) {
+      //显示模态框,加载数据
       yield put({
-        type:'changeVisible',
+        type: 'initModal',
+        payload: payload
+      })
+      yield put({
+        type: 'changeVisible',
+      })
+
+    },
+    *hideModal(_, { call, put }) {
+      yield put({
+        type: 'changeVisible',
       })
     },
     *resetPassword({ payload }, { call, put }) {
@@ -97,10 +110,19 @@ export default {
         },
       };
     },
-    changeVisible(state,action) {
+    initModal(state, { payload }) {
       return {
         ...state,
-        modalVisible:!state.modalVisible,
+        modal: {
+          title: payload.title,
+          data: payload.data,
+        }
+      }
+    },
+    changeVisible(state, action) {
+      return {
+        ...state,
+        modalVisible: !state.modalVisible,
       }
     },
     loadList(state, { payload }) {

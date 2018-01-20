@@ -18,6 +18,7 @@ const getValue = obj => Object.keys(obj).map(key => obj[key]).join(',');
 export default class UserList extends PureComponent {
 
     state = {
+        modalinfo: {},
         selectedRows: [],
         formValues: {},
     }
@@ -73,7 +74,7 @@ export default class UserList extends PureComponent {
         })
     }
     // 事件 传参方法
-    resetPassword = (record, event) => {
+    resetPassword = (record) => {
         console.log(record)
         const { dispatch } = this.props;
         dispatch({
@@ -84,11 +85,32 @@ export default class UserList extends PureComponent {
     deleteUser = (record, event) => {
         console.log(record);
     }
-    //显示隐藏模态框
-    changeVisible = () => {
+    //显示添加模态框
+    changeVisible = (record) => {
+        const { dispatch } = this.props;
+        if (record != undefined) {
+            dispatch({
+                type: 'user/changeModalVisible',
+                payload: {
+                    title: "编辑-" + record.NickName,
+                    data: record,
+                }
+            })
+        } else {
+            dispatch({
+                type: 'user/changeModalVisible',
+                payload: {
+                    title: "添加用户",
+                    data: {}
+                }
+            })
+        }
+
+    }
+    hideModal=()=>{
         const { dispatch } = this.props;
         dispatch({
-            type: 'user/changeModalVisible'
+            type: 'user/hideModal',
         })
     }
     render() {
@@ -125,13 +147,15 @@ export default class UserList extends PureComponent {
                 dataIndex: 'action',
                 render: (text, record) => (
                     <span>
-                        <Popconfirm title="确定删除?" okText="Yes" onConfirm={this.deleteUser.bind(this, record)} cancelText="No">
+                        <Popconfirm title="确定删除?" okText="Yes" onConfirm={() => this.deleteUser(record)} cancelText="No">
                             <a >删除</a>
                         </Popconfirm>
                         <Divider type="vertical" />
-                        <Popconfirm title="确定重置密码?" okText="Yes" onConfirm={this.resetPassword.bind(this, record)} cancelText="No">
+                        <Popconfirm title="确定重置密码?" okText="Yes" onConfirm={() => this.resetPassword(record)} cancelText="No">
                             <a >重置密码</a>
                         </Popconfirm>
+                        <Divider type="vertical" />
+                        <a onClick={() => this.changeVisible(record)}>编辑</a>
                     </span>
                 )
             }
@@ -158,18 +182,18 @@ export default class UserList extends PureComponent {
                                 </Col>
                             </Row>
                         </Form>
-                        <Button icon="plus" type="primary" onClick={() => this.changeVisible()}>新建</Button>
+                        <Button icon="plus" type="primary" onClick={() => this.changeVisible()}>添加用户</Button>
                         <Table
                             bordered={true}
                             loading={loading}
                             dataSource={list}
                             pagination={paginationProps}
                             columns={columns}
-                            onChange={this.tableChanger}
+                            onChange={() => this.tableChanger()}
                         />
                     </div>
                 </ Card>
-                <UserModal onCancel={this.changeVisible} />
+                <UserModal onCancel={() => this.hideModal()} />
             </ PageHeaderLayout>
         )
     }
