@@ -16,6 +16,14 @@ const menuData = [{
     // hideInMenu: true,
   }],
 }, {
+  name:'系统设置',
+  icon:'setting',
+  path:'setting',
+  children:[{
+    name:'系统管理员',
+    path:'admin-list'
+  }]
+},{
   name: '表单页',
   icon: 'form',
   path: 'form',

@@ -160,6 +160,9 @@ export const getRouterData = (app) => {
     '/user/register-result': {
       component: dynamicWrapper(app, [], () => import('../routes/User/RegisterResult')),
     },
+    '/setting/admin-list': {
+      component: dynamicWrapper(app, ['user'], () => import('../routes/User/AdminList')),
+    }
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),
     // },
