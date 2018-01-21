@@ -7,22 +7,26 @@ const FormItem = Form.Item;
 }))
 export default class AdminModal extends PureComponent {
     state = {
-
+        data: this.props.user.modal.data
     };
     isOk = () => {
         console.log(this.props.user);
     }
     changeInput = (e) => {
-        // const { data: { NickName, PhoneNum } } = this.state;
-        // const { value } = e.target;
-        // console.log(e.target)
-        // this.setState({
-        //     data: {
-        //         NickName: e.target.name === 'NickName' ? value : NickName,
-        //         PhoneNum: e.target.name === 'PhoneNum' ? value : PhoneNum,
-        //     },
-        // })
-        // console.log(this.state.data)
+        const { data: { NickName, PhoneNum } } = this.state;
+        const { value } = e.target;
+        const { dispatch, form } = this.props;
+        console.log(this.props)
+        // form.validateFields((err, fieldsValue) => {
+        //     console.log(fieldsValue)
+        //     if (err) return;
+        //     dispatch({
+        //         type: 'updateModalData',
+        //         data: fieldsValue,
+        //     })
+        // });
+
+
     }
     render() {
         const { onCancel } = this.props;

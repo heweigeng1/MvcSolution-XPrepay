@@ -69,6 +69,12 @@ export default {
         payload: payload
       })
     },
+    *updateModalData({ payload }, { call, put }) {
+      yield put({
+        type: 'updateModaldata',
+        payload: payload
+      })
+    },
     *resetPassword({ payload }, { call, put }) {
       const response = yield call(resetPassword, payload);
       yield call(checkResponse, { response, put });
@@ -111,13 +117,21 @@ export default {
       }
     },
     changeVisible(state, { payload }) {
-      console.log(payload)
       return {
         ...state,
         modalVisible: !state.modalVisible,
         modal: {
           title: payload.title,
           data: payload.data
+        }
+      }
+    },
+    updateModaldata(state, { payload }) {
+      console.log(payload)
+      return {
+        ...state,
+        modal: {
+          data: payload,
         }
       }
     },
