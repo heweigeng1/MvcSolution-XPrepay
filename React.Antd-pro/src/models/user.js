@@ -1,4 +1,4 @@
-import { query as queryUsers, queryCurrent, userSearch, resetPassword, add, update, changeDelflag, index } from '../services/user';
+import { query as queryUsers, queryCurrent, userSearch, index, resetPassword } from '../services/user';
 import { checkResponse, messagePut } from '../utils/errPut'
 export default {
   namespace: 'user',
@@ -10,13 +10,8 @@ export default {
     },
     loading: false,
     currentUser: {},
-    modal: {
-      title: "",
-      data: {},
-      isAdd: true,
-      confirmLoading: false,
-      modalVisible: false
-    }
+    modalVisible: false,
+    modal: { title: "", data: {} }
   },
 
   effects: {
@@ -42,8 +37,20 @@ export default {
         payload: response,
       });
     },
+    *index(_, { call, put }) {
+      const response = yield call(index);
+      //是否正确返回数据.根据错误code 跳转页面
+      yield call(checkResponse, { response, put });
+      yield put({
+        type: 'loadList',
+        payload: response.Value,
+      })
+    },
     *userSearch({ payload }, { call, put }) {
       const response = yield call(userSearch, payload);
+
+      //是否正确返回数据.根据错误code 跳转页面
+      yield call(checkResponse, { response, put });
       yield put({
         type: 'loadList',
         payload: response.Value,
@@ -54,93 +61,23 @@ export default {
         type: 'hideModal',
       })
     },
+
     *changeModalVisible({ payload }, { call, put }) {
+      console.log(payload)
       yield put({
         type: 'changeVisible',
         payload: payload
       })
     },
-    *updateAdmin({ payload }, { call, put }) {
-      //加载
-      yield put({ type: 'submitload' });
-      const response = yield call(update, payload);
-      //加载结束
-      yield put({ type: 'submitload' });
-      //提示信息
-      yield call(messagePut, { response, put });
-      if (response.Success) {
-        //隐藏模态框
-        yield put({ type: 'hideModal' });
-        //table 加载
-        yield put({
-          type: 'changeLoading',
-          payload: true,
-        })
-        //请求数据
-        const rp = yield call(index);
-        yield put({
-          type: 'loadList',
-          payload: rp.Value,
-        })
-        //加载结束
-        yield put({
-          type: 'changeLoading',
-          payload: false,
-        })
-      }
-    },
-    *add({ payload }, { call, put }) {
-      //加载
-      yield put({ type: 'submitload' });
-      const response = yield call(add, payload);
-      //加载结束
-      yield put({ type: 'submitload' });
-      //提示信息
-      yield call(messagePut, { response, put });
-      if (response.Success) {
-        //隐藏模态框
-        yield put({ type: 'hideModal' });
-        //table 加载
-        yield put({
-          type: 'changeLoading',
-          payload: true,
-        })
-        //请求数据
-        const rp = yield call(index);
-        yield put({
-          type: 'loadList',
-          payload: rp.Value,
-        })
-        //加载结束
-        yield put({
-          type: 'changeLoading',
-          payload: false,
-        })
-      }
-    },
-    *changeDelflag({ payload }, { call, put }) {
-      const { record, formValues } = payload;
-      const response = yield call(changeDelflag, record);
-      yield call(messagePut, { response, put });
+    *updateModalData({ payload }, { call, put }) {
       yield put({
-        type: 'changeLoading',
-        payload: true,
-      })
-      const response1 = yield call(userSearch, {
-        ...formValues,
-        pagination: {}
-      });
-      yield put({
-        type: 'loadList',
-        payload: response1.Value,
-      })
-      yield put({
-        type: 'changeLoading',
-        payload: false,
+        type: 'updateModaldata',
+        payload: payload
       })
     },
     *resetPassword({ payload }, { call, put }) {
       const response = yield call(resetPassword, payload);
+      yield call(checkResponse, { response, put });
       yield call(messagePut, { response, put });
     },
   },
@@ -176,40 +113,26 @@ export default {
     hideModal(state, action) {
       return {
         ...state,
-        modal: {
-          ...state.modal,
-          modalVisible: false,
-        },
-
+        modalVisible: !state.modalVisible,
       }
     },
     changeVisible(state, { payload }) {
       return {
         ...state,
+        modalVisible: !state.modalVisible,
         modal: {
           title: payload.title,
-          data: payload.data,
-          isAdd: payload.isAdd,
-          modalVisible: true,
+          data: payload.data
         }
       }
     },
-    updateAdmin(state, { payload }) {
+    updateModaldata(state, { payload }) {
+      console.log(payload)
       return {
         ...state,
         modal: {
           data: payload,
         }
-      }
-    },
-    submitload(state, { payload }) {
-      return {
-        ...state,
-        modal: {
-          ...state.modal,
-          confirmLoading: !state.modal.confirmLoading
-        }
-
       }
     },
     loadList(state, { payload }) {
