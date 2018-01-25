@@ -93,7 +93,7 @@ namespace Xprepay
 
         public static PageResult<T> ToPageResult<T>(this IQueryable<T> query, PageRequest request)
         {
-            return new PageResult<T>(query.OrderBy(request.Sorter, request.SortDirection), request.CurrentPage, request.PageSize);
+            return new PageResult<T>(query.OrderBy(request.Sorter, request.SortDirection), request.Current, request.PageSize);
         }
     }
 }

@@ -111,11 +111,20 @@ namespace Xprepay.Services
         {
             using (var db = base.NewDB())
             {
-                user.UserType = (int)EnumUserType.普通用户;
+                if (db.Users.Any(c=>c.PhoneNum==user.PhoneNum))
+                {
+                    throw new KnownException("手机号已被使用");
+                }
+                if (db.Users.Any(c=>c.UserName==user.UserName))
+                {
+                    throw new KnownException("用户名已存在");
+                }
+                user.UserType = user.UserType;
                 user.CreatedTime = DateTime.Now;
                 user.LastUpdatedTime = DateTime.Now;
                 user.RegisterIp = IpHelper.GetAddress(HttpContext.Current.Request.UserHostAddress);
-                user.Password = CryptoService.Md5HashEncrypt(user.Password);
+                string pw = user.PhoneNum.Substring(user.PhoneNum.Length-6, 6);
+                user.Password = CryptoService.Md5HashEncrypt(pw);
                 db.Users.Add(user);
                 return db.SaveChanges()>0;
             }
@@ -128,14 +137,23 @@ namespace Xprepay.Services
         public bool Update(User user) {
             using (var db=base.NewDB())
             {
-               var entity= db.Users.FirstOrDefault(c => c.Id == user.Id);
-                if (entity!=null)
+                if (db.Users.Any(c => c.UserName == user.UserName && c.Id != user.Id))
                 {
-                    entity.UserName = user.UserName;
-                    entity.NickName = user.NickName;
-                    entity.PhoneNum = user.PhoneNum;
-                    entity.LastUpdatedTime = DateTime.Now;
+                    throw new KnownException("用户名已使用!");
                 }
+                if (db.Users.Any(c => c.Id != user.Id && c.PhoneNum == user.PhoneNum))
+                {
+                    throw new KnownException("手机号已使用!");
+                }
+               var entity= db.Users.FirstOrDefault(c => c.Id == user.Id);
+                if (entity==null)
+                {
+                    throw new KnownException("用户不存在");
+                }
+                entity.UserName = user.UserName;
+                entity.NickName = user.NickName;
+                entity.PhoneNum = user.PhoneNum;
+                entity.LastUpdatedTime = DateTime.Now;
                 return db.SaveChanges() > 0;
             }
         }
@@ -196,6 +214,10 @@ namespace Xprepay.Services
             using (var db=base.NewDB())
             {
                 var data = db.Users.AsQueryable();
+                if (model.Delflag!=null)
+                {
+                    data = data.Where(c => c.Delflag==model.Delflag);
+                }
                 if (!string.IsNullOrEmpty(model.PhoneNum))
                 {
                     data = data.Where(c => c.PhoneNum.Contains(model.PhoneNum));

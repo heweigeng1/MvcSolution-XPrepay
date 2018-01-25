@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace Xprepay
 {
@@ -6,15 +7,16 @@ namespace Xprepay
     {
         public PageRequest()
         {
-            CurrentPage = 1;
+            Current = 1;
             Sorter = "CreatedTime";
             PageSize = 10;
             SortDirection = "descend";
         }
         private int _pageSize;
-        [Display(Name = "currentPage")]
-        public int CurrentPage { get; set; }
-        [Display(Name = "pageSize")]
+        //[Display(Name = "current")]
+        [JsonProperty("current")]
+        public int Current { get; set; }
+        [JsonProperty("pageSize")]
         public int PageSize
         {
             get { return _pageSize ; }
@@ -30,9 +32,9 @@ namespace Xprepay
                 }
             }
         }
-        [Display(Name = "sorter")]
+        [JsonProperty("sorter")]
         public string Sorter { get; set; }
-        [Display(Name = "sortDirection")]
+        [JsonProperty("order")]
         public string SortDirection { get; set; }
     }
 }

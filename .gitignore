@@ -11,8 +11,8 @@
 *.userprefs
 
 # Build results
+Log/
 [Dd]ebug/
-node_modules/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
@@ -189,6 +189,7 @@ ClientBin/
 *.dbproj.schemaview
 *.pfx
 *.publishsettings
+node_modules/
 orleans.codegen.cs
 
 # RIA/Silverlight projects
@@ -251,8 +252,8 @@ ModelManifest.xml
 /JcSoft.SmartTown/upload/attachment/2017/02
 /Xprepay.Web.Main/Upload/Img/2017/6
 /Xprepay.Web.Main/file/excel/Export
-/Xprepay.Web.Main/Log/Error
-/Xprepay.Web.Main/Log/Info
-/Xprepay.Web.Main/Upload/Img/2017/12
-/Xprepay.Web.Main/ant-design-pro/dist
+/Xprepay.Web.Main/Upload/Img/2017/9
+/Xprepay.Web.Main/file/excel
+/Xprepay.Web.Main/Upload/Img/2017/10
 /Xprepay.Web.Main/dist
+/Xprepay.Web.Main/Upload/Img/2017/12

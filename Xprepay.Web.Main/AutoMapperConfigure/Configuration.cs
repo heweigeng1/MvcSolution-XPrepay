@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Xprepay.Services.Admin.AutoMapperAdmin;
+//using Xprepay.Services.Admin.AutoMapperAdmin;
 using Xprepay.Services.Mobile.AutoMapperMobile;
 
 namespace Xprepay.Web.Main.AutoMapperConfigure
@@ -10,7 +10,7 @@ namespace Xprepay.Web.Main.AutoMapperConfigure
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.AddProfile(new AutoMapperAdminConfigure());
+                //cfg.AddProfile(new AutoMapperAdminConfigure());
                 cfg.AddProfile(new AutoMapperMobileConfigure());
             });
         }

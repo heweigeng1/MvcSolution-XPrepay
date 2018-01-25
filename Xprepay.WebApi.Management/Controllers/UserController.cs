@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using Xprepay.Data;
+using Xprepay.Data.Enums;
 using Xprepay.Services;
 using Xprepay.Services.Dtos;
 using Xprepay.Services.SearchCriterias;
@@ -19,7 +20,7 @@ namespace Xprepay.WebApi.Management.Controllers
                 new KnownException("LOGERROR");
             });
         }
-        [HttpGet]
+        [HttpPost]
         [Route("index")]
         public StandardJsonResult<PageResult<UserDto>> Index()
         {
@@ -28,6 +29,15 @@ namespace Xprepay.WebApi.Management.Controllers
             {
                 result.Value = Ioc.Get<IUserService>().PageSearch(new SCUser());
             }, result);
+        }
+        [HttpPost]
+        [Route("delflag")]
+        public StandardJsonResult Delflag([FromBody]SCKey model)
+        {
+            return base.Try(() =>
+            {
+                Ioc.Get<IUserService>().Delflag(model.Id);
+            });
         }
         [HttpPost]
         [Route("search")]
@@ -39,13 +49,13 @@ namespace Xprepay.WebApi.Management.Controllers
                 result.Value = Ioc.Get<IUserService>().PageSearch(model);
             }, result);
         }
-        [HttpGet]
+        [HttpPost]
         [Route("resetPassword")]
-        public StandardJsonResult ResetPassword(Guid id)
+        public StandardJsonResult ResetPassword([FromBody]SCKey model)
         {
             return base.Try(() =>
             {
-                Ioc.Get<IUserService>().ResetPassword(id);
+                Ioc.Get<IUserService>().ResetPassword(model.Id);
             });
         }
         [HttpPost]
@@ -55,6 +65,15 @@ namespace Xprepay.WebApi.Management.Controllers
             return base.Try(() =>
             {
                 Ioc.Get<IUserService>().Add(user);
+            });
+        }
+        [HttpPost]
+        [Route("updateadmin")]
+        public StandardJsonResult UpdateAdmin([FromBody]User user)
+        {
+            return base.Try(() =>
+            {
+                Ioc.Get<IUserService>().Update(user);
             });
         }
     }
