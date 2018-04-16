@@ -4,6 +4,8 @@
 
 **原项目地址:[https://github.com/leotsai/mvcsolution/](https://github.com/leotsai/mvcsolution/)**
 
+现在项目增加了一个分支 antd-pro ,主要是后台使用了单页面框架.react 的antd-pro 后台管理UI框架.
+
 ## 跟原项目的区别
 
 - autompper--映射组件
@@ -40,11 +42,13 @@
 
 * 不能右键添加控制器
 * 不能在控制器右键跳转到视图
+* Management是给后台单页面程序提供接口的.如果是用主线的开发方式,无视这个项目即可.
+* 在分支antd-pro 里实现了jwt授权验证.如果你需要jwt可以把那个实现复制过来即可.
 
 ## 将来
 
-* 将日志系统改为log4net
-* 后台修改为ng 或者vue,react框架的UI
+* 将日志系统改为log4net(主线和分支都实现了)
+* 后台修改为ng 或者vue,react框架的UI(在antd-pro 分支已经使用react的antd-pro)
 * 权限 是否改为微软的Identity组件,还在思考
 * 升级为.net core版本
 * 微信开发的一些类库
@@ -56,6 +60,7 @@
 
 ## 最新情况
 
-目前正在准备改版,将使用react 的前端框架[Ant Design Pro阿里系](https://pro.ant.design/),
+目前正在准备改版,将使用react 的前端框架[Ant Design Pro阿里系](https://pro.ant.design/),(已经实现)
 
-日志系统改为log4net.
+日志系统改为log4net.(已经实现)
+
