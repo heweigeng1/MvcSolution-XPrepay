@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Xprepay.WebApi.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AppAccountController.cs" />
+    <Compile Include="Controllers\AppWeChatController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +72,10 @@
     <ProjectReference Include="..\Xprepay.Infrastructure\Xprepay.Infrastructure.csproj">
       <Project>{3593818e-2b60-41a8-b5ba-de479b6a5d51}</Project>
       <Name>Xprepay.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xprepay.Services.Api\Xprepay.Services.WebApi.csproj">
+      <Project>{1A7A8E9B-9D1A-49A8-9EF3-88FE9F886FA0}</Project>
+      <Name>Xprepay.Services.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\Xprepay.Services\Xprepay.Services.csproj">
       <Project>{81a7247f-f729-49b4-ab99-1b0ab09fb56e}</Project>

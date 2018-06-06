@@ -8,14 +8,21 @@ using Xprepay.Web.Controllers;
 
 namespace Xprepay.WebApi.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [RoutePrefix("api/account")]
     public class AppAccountController : XprepayApiBase
     {
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("login")]
         public IHttpActionResult Login()
         {
-            throw new KnownException("test");
+
             return Json("test");
         }
     }

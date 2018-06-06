@@ -111,6 +111,7 @@
     <Compile Include="Utilities\OrderHelper.cs" />
     <Compile Include="Utilities\Serializer.cs" />
     <Compile Include="Utilities\SqlHelper.cs" />
+    <Compile Include="Utils\WxUtils.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
